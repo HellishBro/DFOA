@@ -1,0 +1,25 @@
+{
+  "name": "DF.oa",
+  "version": "0.0.1",
+  "description": "DF.oa is a sibling language of Orchestra that is used to compile exclusively to DiamondFire templates.",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc"
+  },
+  "license": "MIT",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.5.2",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "tsx": "^4.22.5",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "antlr4": "^4.13.2"
+  }
+}
