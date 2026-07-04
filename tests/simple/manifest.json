@@ -1,0 +1,14 @@
+{
+  "name": "tests",
+  "description": "",
+  "version": "0.0.1",
+  "src_dir": "src",
+  "dist_dir": "dist",
+  "authors": [],
+  "cfg": {
+    "returns": {
+      "slot": "first",
+      "name": "ret"
+    }
+  }
+}
