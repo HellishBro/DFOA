@@ -1,8 +1,11 @@
 import * as fs from "node:fs";
+import * as util from "node:util";
 
 import { program } from "commander";
 import { parse_fs } from "./parsers.js";
 import { init_project } from "./tools/make_project.js";
+import { gather_cst } from "lang/parser/gather_cst.js";
+import CSTASTConverter from "lang/parser/convert/to_ast.js";
 
 program.command("make")
     .description("Make and init a new df.oa project")
@@ -27,6 +30,28 @@ program.command("init")
     }), ".")
     .action((dir: string) => {
         init_project(dir);
+    });
+
+program.command("parse")
+    .description("Parse a single df.oa file and print its syntax tree")
+    .argument("<file>", "file to parse", parse_fs({
+        file: true,
+        directory: false,
+        exists: true
+    }))
+    .action((file: string) => {
+        let cst = gather_cst(fs.readFileSync(file).toString());
+        process.stdout.write(
+            "CST: " +
+            cst.toStringTree()
+            + "\n"
+        );
+        let ast = new CSTASTConverter(file).start(cst);
+        process.stdout.write(
+            "AST: " +
+            util.inspect(ast, false, null, true)
+            + "\n"
+        );
     })
 
 program.parse();

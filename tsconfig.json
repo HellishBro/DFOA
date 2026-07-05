@@ -39,6 +39,10 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "paths": {
+      "lang/*": ["./src/language/*"],
+      "struct/*": ["./src/struct/*"]
+    }
   },
   "include": [
     "src/**/*.ts"

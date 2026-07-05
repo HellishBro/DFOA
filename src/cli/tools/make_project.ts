@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import path from "node:path";
-import type { Manifest } from "../../struct/manifest.js";
+import type { Manifest } from "struct/manifest.js";
 
 export function init_project(dir: string) {
     fs.writeFileSync(

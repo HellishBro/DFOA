@@ -6,11 +6,11 @@ import { StartContext } from "./DFOAParser.js";
 import { TlStatementContext } from "./DFOAParser.js";
 import { FuncContext } from "./DFOAParser.js";
 import { ParamslistContext } from "./DFOAParser.js";
-import { BlockContext } from "./DFOAParser.js";
 import { StatementContext } from "./DFOAParser.js";
-import { Print_statementContext } from "./DFOAParser.js";
-import { Expr_statementContext } from "./DFOAParser.js";
+import { PrintStatementContext } from "./DFOAParser.js";
+import { ExprStatementContext } from "./DFOAParser.js";
 import { SemiContext } from "./DFOAParser.js";
+import { BlockContext } from "./DFOAParser.js";
 import { IdentContext } from "./DFOAParser.js";
 import { ExprContext } from "./DFOAParser.js";
 import { LiteralContext } from "./DFOAParser.js";
@@ -62,16 +62,6 @@ export class DFOAListener implements ParseTreeListener {
      */
     exitParamslist?: (ctx: ParamslistContext) => void;
     /**
-     * Enter a parse tree produced by `DFOAParser.block`.
-     * @param ctx the parse tree
-     */
-    enterBlock?: (ctx: BlockContext) => void;
-    /**
-     * Exit a parse tree produced by `DFOAParser.block`.
-     * @param ctx the parse tree
-     */
-    exitBlock?: (ctx: BlockContext) => void;
-    /**
      * Enter a parse tree produced by `DFOAParser.statement`.
      * @param ctx the parse tree
      */
@@ -82,25 +72,25 @@ export class DFOAListener implements ParseTreeListener {
      */
     exitStatement?: (ctx: StatementContext) => void;
     /**
-     * Enter a parse tree produced by `DFOAParser.print_statement`.
+     * Enter a parse tree produced by `DFOAParser.printStatement`.
      * @param ctx the parse tree
      */
-    enterPrint_statement?: (ctx: Print_statementContext) => void;
+    enterPrintStatement?: (ctx: PrintStatementContext) => void;
     /**
-     * Exit a parse tree produced by `DFOAParser.print_statement`.
+     * Exit a parse tree produced by `DFOAParser.printStatement`.
      * @param ctx the parse tree
      */
-    exitPrint_statement?: (ctx: Print_statementContext) => void;
+    exitPrintStatement?: (ctx: PrintStatementContext) => void;
     /**
-     * Enter a parse tree produced by `DFOAParser.expr_statement`.
+     * Enter a parse tree produced by `DFOAParser.exprStatement`.
      * @param ctx the parse tree
      */
-    enterExpr_statement?: (ctx: Expr_statementContext) => void;
+    enterExprStatement?: (ctx: ExprStatementContext) => void;
     /**
-     * Exit a parse tree produced by `DFOAParser.expr_statement`.
+     * Exit a parse tree produced by `DFOAParser.exprStatement`.
      * @param ctx the parse tree
      */
-    exitExpr_statement?: (ctx: Expr_statementContext) => void;
+    exitExprStatement?: (ctx: ExprStatementContext) => void;
     /**
      * Enter a parse tree produced by `DFOAParser.semi`.
      * @param ctx the parse tree
@@ -111,6 +101,16 @@ export class DFOAListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitSemi?: (ctx: SemiContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.block`.
+     * @param ctx the parse tree
+     */
+    enterBlock?: (ctx: BlockContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.block`.
+     * @param ctx the parse tree
+     */
+    exitBlock?: (ctx: BlockContext) => void;
     /**
      * Enter a parse tree produced by `DFOAParser.ident`.
      * @param ctx the parse tree

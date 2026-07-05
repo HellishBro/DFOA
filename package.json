@@ -5,7 +5,7 @@
   "scripts": {
     "dfoa": "tsx src/cli/index.ts",
     "build": "tsc",
-    "gen-grammar": "antlr-ng -o src/language/generated -Dlanguage=TypeScript src/language/grammar/DFOALexer.g4 && antlr-ng -o src/language/generated --lib src/language/generated -l -v -Dlanguage=TypeScript src/language/grammar/DFOA.g4"
+    "gen-grammar": "antlr-ng -o src/language/parser/dfoa -Dlanguage=TypeScript grammar/DFOALexer.g4 && antlr-ng -o src/language/parser/dfoa --lib src/language/parser/dfoa -l -v -Dlanguage=TypeScript grammar/DFOA.g4"
   },
   "license": "MIT",
   "devEngines": {

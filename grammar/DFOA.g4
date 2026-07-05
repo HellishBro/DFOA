@@ -1,5 +1,5 @@
 grammar DFOA;
-import DFOAStatements;
+import DFOATopLevels;
 options {
     tokenVocab=DFOALexer;
 }
