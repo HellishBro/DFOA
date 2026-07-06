@@ -6,6 +6,7 @@ import { TopLevel } from "lang/ast/top_levels.js";
 import { Span } from "lang/utils/span.js";
 import { BlockContext, ExprContext, IdentContext, StatementContext, TlStatementContext } from "../dfoa/DFOAParser.js";
 import { Body, Identifier } from "lang/ast/ast.js";
+import unescape from "lang/utils/unescape.js";
 
 export default interface Orchestrator {
     expression: V<Expression>,
@@ -36,7 +37,7 @@ export class DFOAVisitor<T> extends V<T> {
 
     visit_ident(node: IdentContext): Identifier {
         if (node.COMPLEX_IDENT()) {
-            throw new Error("not implemented"); // TODO: IMPLEMENT THIS
+            return new Identifier(unescape(node.COMPLEX_IDENT()!.getText()), this.get_span(node))
         }
         return new Identifier(node.SIMPLE_IDENT()!.getText(), this.get_span(node));
     }
@@ -59,6 +60,6 @@ export class DFOAVisitor<T> extends V<T> {
     }
 }
 
-export function unreachable(): Error {
-    return new Error("unreachable code!");
+export function unreachable(): never {
+    throw new Error("unreachable code!");
 }

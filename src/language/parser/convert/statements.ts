@@ -11,7 +11,7 @@ export default class StatementCSTASTConverter extends DFOAVisitor<Statement> {
         } else if (ctx.semi()) {
             return this.visitSemi(ctx.semi()!);
         }
-        throw unreachable();
+        unreachable();
     }
 
     visitPrintStatement: (ctx: PrintStatementContext) => Statement = ctx => {

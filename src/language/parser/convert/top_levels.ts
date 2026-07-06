@@ -7,7 +7,7 @@ export default class TopLevelCSTASTConverter extends DFOAVisitor<TopLevel> {
         if (ctx.func()) {
             return this.visitFunc(ctx.func()!);
         }
-        throw unreachable();
+        unreachable();
     }
 
     visitFunc: (ctx: FuncContext) => TopLevel = ctx => {

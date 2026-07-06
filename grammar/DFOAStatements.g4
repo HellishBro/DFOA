@@ -11,4 +11,3 @@ exprStatement: expr SEMI;
 semi: SEMI;
 
 block: LBRACE statement* RBRACE | statement;
-ident: SIMPLE_IDENT | COMPLEX_IDENT;
