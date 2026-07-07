@@ -3,7 +3,7 @@ options {
     tokenVocab=DFOALexer;
 }
 
-type: LPAREN (type (COMMA type)* COMMA?)? RPAREN #tupleType
+type: LPAREN (type COMMA | type (COMMA type)+ COMMA?)? RPAREN #tupleType
     | LPAREN type RPAREN #groupingType
     | ident generics? #basicType
     ;
