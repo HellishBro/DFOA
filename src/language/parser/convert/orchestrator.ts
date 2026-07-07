@@ -4,14 +4,20 @@ import { Expression } from "lang/ast/expressions.js";
 import { Statement } from "lang/ast/statements.js";
 import { TopLevel } from "lang/ast/top_levels.js";
 import { Span } from "lang/utils/span.js";
-import { BlockContext, ExprContext, IdentContext, StatementContext, TlStatementContext } from "../dfoa/DFOAParser.js";
+import { BlockContext, ExprContext, IdentContext, StatementContext, TlStatementContext, TypeContext } from "../dfoa/DFOAParser.js";
 import { Body, Identifier } from "lang/ast/ast.js";
 import unescape from "lang/utils/unescape.js";
+import { TypeNode } from "lang/ast/types.js";
+import TypeCSTASTConverter from "./type.js";
+import TopLevelCSTASTConverter from "./top_levels.js";
+import StatementCSTASTConverter from "./statements.js";
+import ExpressionCSTASTConverter from "./expressions.js";
 
 export default interface Orchestrator {
-    expression: V<Expression>,
-    statement: V<Statement>,
-    top_level: V<TopLevel>,
+    expression: ExpressionCSTASTConverter,
+    statement: StatementCSTASTConverter,
+    top_level: TopLevelCSTASTConverter,
+    type: TypeCSTASTConverter,
     file: string
 }
 
@@ -24,15 +30,19 @@ export class DFOAVisitor<T> extends V<T> {
     }
 
     visit_expression(node: ExprContext): Expression {
-        return this.orch.expression.visitExpr!(node);
+        return this.orch.expression.visitExpr(node);
     }
 
     visit_statement(node: StatementContext): Statement {
-        return this.orch.statement.visitStatement!(node);
+        return this.orch.statement.visitStatement(node);
     }
 
     visit_top_level(node: TlStatementContext): TopLevel {
-        return this.orch.top_level.visitTlStatement!(node);
+        return this.orch.top_level.visitTlStatement(node);
+    }
+
+    visit_type(node: TypeContext): TypeNode {
+        return this.orch.type.visitType(node);
     }
 
     visit_ident(node: IdentContext): Identifier {

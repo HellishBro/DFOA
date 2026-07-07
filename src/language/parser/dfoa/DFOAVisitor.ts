@@ -5,7 +5,11 @@ import { AbstractParseTreeVisitor } from "antlr4ng";
 import { StartContext } from "./DFOAParser.js";
 import { TlStatementContext } from "./DFOAParser.js";
 import { FuncContext } from "./DFOAParser.js";
+import { SignatureContext } from "./DFOAParser.js";
+import { GenericDefContext } from "./DFOAParser.js";
 import { ParamslistContext } from "./DFOAParser.js";
+import { ReturnSigContext } from "./DFOAParser.js";
+import { ParamContext } from "./DFOAParser.js";
 import { StatementContext } from "./DFOAParser.js";
 import { PrintStatementContext } from "./DFOAParser.js";
 import { ExprStatementContext } from "./DFOAParser.js";
@@ -26,11 +30,19 @@ import { FuncInvokeContext } from "./DFOAParser.js";
 import { AtomTrailContext } from "./DFOAParser.js";
 import { SubscriptContext } from "./DFOAParser.js";
 import { TupleAccessContext } from "./DFOAParser.js";
+import { TypeAliasContext } from "./DFOAParser.js";
 import { AttributeContext } from "./DFOAParser.js";
+import { FuncCallTrailContext } from "./DFOAParser.js";
 import { AtomContext } from "./DFOAParser.js";
+import { NewExprContext } from "./DFOAParser.js";
 import { LiteralContext } from "./DFOAParser.js";
 import { ListContext } from "./DFOAParser.js";
 import { TupleContext } from "./DFOAParser.js";
+import { TupleTypeContext } from "./DFOAParser.js";
+import { GroupingTypeContext } from "./DFOAParser.js";
+import { BasicTypeContext } from "./DFOAParser.js";
+import { GenericsContext } from "./DFOAParser.js";
+import { TypeParamContext } from "./DFOAParser.js";
 import { IdentContext } from "./DFOAParser.js";
 
 
@@ -61,11 +73,35 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitFunc?: (ctx: FuncContext) => Result;
     /**
+     * Visit a parse tree produced by `DFOAParser.signature`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitSignature?: (ctx: SignatureContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.genericDef`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitGenericDef?: (ctx: GenericDefContext) => Result;
+    /**
      * Visit a parse tree produced by `DFOAParser.paramslist`.
      * @param ctx the parse tree
      * @return the visitor result
      */
     visitParamslist?: (ctx: ParamslistContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.returnSig`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitReturnSig?: (ctx: ReturnSigContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.param`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitParam?: (ctx: ParamContext) => Result;
     /**
      * Visit a parse tree produced by `DFOAParser.statement`.
      * @param ctx the parse tree
@@ -190,6 +226,13 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitTupleAccess?: (ctx: TupleAccessContext) => Result;
     /**
+     * Visit a parse tree produced by the `typeAlias`
+     * labeled alternative in `DFOAParser.trail`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitTypeAlias?: (ctx: TypeAliasContext) => Result;
+    /**
      * Visit a parse tree produced by the `attribute`
      * labeled alternative in `DFOAParser.trail`.
      * @param ctx the parse tree
@@ -197,11 +240,24 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitAttribute?: (ctx: AttributeContext) => Result;
     /**
+     * Visit a parse tree produced by the `funcCallTrail`
+     * labeled alternative in `DFOAParser.trail`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitFuncCallTrail?: (ctx: FuncCallTrailContext) => Result;
+    /**
      * Visit a parse tree produced by `DFOAParser.atom`.
      * @param ctx the parse tree
      * @return the visitor result
      */
     visitAtom?: (ctx: AtomContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.newExpr`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitNewExpr?: (ctx: NewExprContext) => Result;
     /**
      * Visit a parse tree produced by `DFOAParser.literal`.
      * @param ctx the parse tree
@@ -220,6 +276,39 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitTuple?: (ctx: TupleContext) => Result;
+    /**
+     * Visit a parse tree produced by the `tupleType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitTupleType?: (ctx: TupleTypeContext) => Result;
+    /**
+     * Visit a parse tree produced by the `groupingType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitGroupingType?: (ctx: GroupingTypeContext) => Result;
+    /**
+     * Visit a parse tree produced by the `basicType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitBasicType?: (ctx: BasicTypeContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.generics`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitGenerics?: (ctx: GenericsContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.typeParam`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitTypeParam?: (ctx: TypeParamContext) => Result;
     /**
      * Visit a parse tree produced by `DFOAParser.ident`.
      * @param ctx the parse tree

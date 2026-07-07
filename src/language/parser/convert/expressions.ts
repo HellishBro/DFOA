@@ -1,6 +1,6 @@
-import { Attribute, BinaryOperators, BinOp, Expression, FunctionCall, List, LiteralFloat, LiteralInteger, LiteralString, LiteralText, Operator, Subscript, Tuple, TupleSubscript, UnaryOperators, UnOp } from "lang/ast/expressions.js";
+import { As, Attribute, BinaryOperators, BinOp, Expression, FunctionCall, List, LiteralFloat, LiteralInteger, LiteralString, LiteralText, New, Operator, Subscript, Tuple, TupleSubscript, UnaryOperators, UnOp, Variable } from "lang/ast/expressions.js";
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
-import { AddSubContext, AddSubOpContext, AndContext, AtomContext, AtomTrailContext, AttributeContext, ComparisonContext, CompOpContext, ExprContext, FuncInvokeContext, ListContext, LiteralContext, MultDivContext, MultDivOpContext, NotContext, OrContext, SubscriptContext, TrailContext, TupleAccessContext, TupleContext, UnopContext } from "../dfoa/DFOAParser.js";
+import { AddSubContext, AddSubOpContext, AndContext, AtomContext, AtomTrailContext, AttributeContext, ComparisonContext, CompOpContext, ExprContext, FuncCallTrailContext, FuncInvokeContext, IdentContext, ListContext, LiteralContext, MultDivContext, MultDivOpContext, NewExprContext, NotContext, OrContext, SubscriptContext, TrailContext, TupleAccessContext, TupleContext, TypeAliasContext, UnopContext } from "../dfoa/DFOAParser.js";
 import unescape from "lang/utils/unescape.js";
 import { ParseTree } from "antlr4ng";
 import { spanning } from "lang/utils/span.js";
@@ -59,26 +59,26 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
     }
 
     visitComparison: (ctx: ComparisonContext) => Expression = ctx => {
-        let i = 0;
-        let value = this.visitAddSub(ctx.addSub(i)!);
-        let next_sep: CompOpContext | null, next_value: AddSubContext | null;
-        while (next_sep = ctx.compOp(i), next_value = ctx.addSub(++i), next_sep != null && next_value != null) {
-            let right = this.visitAddSub(next_value!);
+        let value = this.visitAddSub(ctx.addSub(0)!);
+        if (ctx.compOp()) {
+            let sep = ctx.compOp()!;
+            let right = this.visitAddSub(ctx.addSub(1)!);
             let op =
-                next_sep!.EQEQ() ? BinaryOperators.EQ :
-                next_sep!.NEQ() ? BinaryOperators.NEQ :
-                next_sep!.LANGLE() ? BinaryOperators.LT :
-                next_sep!.RANGLE() ? BinaryOperators.GT :
-                next_sep!.LE() ? BinaryOperators.LE :
-                next_sep!.GE() ? BinaryOperators.GE : unreachable();
+                sep.EQEQ() ? BinaryOperators.EQ :
+                sep.NEQ() ? BinaryOperators.NEQ :
+                sep.LANGLE() ? BinaryOperators.LT :
+                sep.RANGLE() ? BinaryOperators.GT :
+                sep.LE() ? BinaryOperators.LE :
+                sep.GE() ? BinaryOperators.GE : unreachable();
             value = new BinOp(
                 value,
-                new Operator(op, this.get_span(next_sep!)),
+                new Operator(op, this.get_span(sep)),
                 right,
                 UncheckedType,
                 spanning(value.span, right.span)
             );
         }
+
         return value;
     }
 
@@ -144,25 +144,35 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
             return this.visitTupleAccess(ctx);
         } else if (ctx instanceof AttributeContext) {
             return this.visitAttribute(ctx);
+        } else if (ctx instanceof FuncCallTrailContext) {
+            return this.visitFuncCallTrail(ctx);
+        } else if (ctx instanceof TypeAliasContext) {
+            return this.visitTypeAlias(ctx);
         }
         unreachable();
     }
 
-    #visitFuncInvoke: (ctx: FuncInvokeContext) => {
-        args: Expression[]
-    } = ctx => {
-        return {
-            args: ctx.expr().map(e => this.visitExpr(e))
-        }
+    visitTypeAlias: (ctx: TypeAliasContext) => Expression = ctx => {
+        return new As(
+            this.visitTrail(ctx.trail()),
+            this.visit_type(ctx.type()),
+            UncheckedType,
+            this.get_span(ctx)
+        )
+    }
+
+    visitFuncCallTrail: (ctx: FuncCallTrailContext) => Expression = ctx => {
+        return new FunctionCall(
+            this.visitTrail(ctx.trail()),
+            ctx.funcInvoke().expr().map(e => this.visitExpr(e)),
+            this.orch.type.visit_generics(ctx.generics()),
+            UncheckedType,
+            this.get_span(ctx)
+        )
     }
 
     visitAtomTrail: (ctx: AtomTrailContext) => Expression = ctx => {
-        let value = this.visitAtom(ctx.atom());
-        if (ctx.funcInvoke()) {
-            let invoked = this.#visitFuncInvoke(ctx.funcInvoke()!);
-            value = new FunctionCall(value, invoked.args, UncheckedType, this.get_span(ctx));
-        }
-        return value;
+        return this.visitAtom(ctx.atom());
     }
 
     visitSubscript: (ctx: SubscriptContext) => Expression = ctx => {
@@ -180,12 +190,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
     visitAttribute: (ctx: AttributeContext) => Expression = ctx => {
         let value = this.visitTrail(ctx.trail());
         let attribute = this.visit_ident(ctx.ident());
-        let attr: Expression = new Attribute(value, attribute, UncheckedType, spanning(value.span, attribute.span));
-        if (ctx.funcInvoke()) {
-            let invoked = this.#visitFuncInvoke(ctx.funcInvoke()!);
-            attr = new FunctionCall(attr, invoked.args, UncheckedType, this.get_span(ctx));
-        }
-        return attr;
+        return new Attribute(value, attribute, UncheckedType, this.get_span(ctx));
     }
 
     visitAtom: (ctx: AtomContext) => Expression = ctx => {
@@ -197,8 +202,12 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
             return this.visitTuple(ctx.tuple()!);
         } else if (ctx.expr()) {
             return this.visitExpr(ctx.expr()!);
+        } else if (ctx.ident()) {
+            return this.visitIdent(ctx.ident()!);
+        } else if (ctx.newExpr()) {
+            return this.visitNewExpr(ctx.newExpr()!);
         }
-        throw unreachable();
+        unreachable();
     }
 
     visitLiteral: (ctx: LiteralContext) => Expression = ctx => {
@@ -211,7 +220,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
         } else if (ctx.FLOAT()) {
             return new LiteralFloat(parseFloat(ctx.FLOAT()!.getText()), this.get_span(ctx.FLOAT()!));
         }
-        throw unreachable();
+        unreachable();
     }
 
     visitList: (ctx: ListContext) => Expression = ctx => {
@@ -220,5 +229,19 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
 
     visitTuple: (ctx: TupleContext) => Expression = ctx => {
         return new Tuple(ctx.expr().map(e => this.visitExpr(e)), UncheckedType, this.get_span(ctx));
+    }
+
+    visitIdent: (ctx: IdentContext) => Expression = ctx => {
+        return new Variable(this.visit_ident(ctx), UncheckedType, this.get_span(ctx))
+    }
+
+    visitNewExpr: (ctx: NewExprContext) => Expression = ctx => {
+        return new New(
+            this.visitExpr(ctx.expr()),
+            ctx.funcInvoke().expr().map(e => this.visitExpr(e)),
+            this.orch.type.visit_generics(ctx.generics()),
+            UncheckedType,
+            this.get_span(ctx)
+        )
     }
 }

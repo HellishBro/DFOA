@@ -1,6 +1,4 @@
-import { Type } from "lang/type/type.js";
 import { Span } from "lang/utils/span.js";
-import { Expression } from "./expressions.js";
 import { Statement } from "./statements.js";
 
 export abstract class Node {

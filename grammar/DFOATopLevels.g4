@@ -6,5 +6,12 @@ options {
 
 tlStatement: func;
 
-func: FUNC ident paramslist block;
-paramslist: LPAREN RPAREN;
+func: FUNC ident signature block;
+
+signature: genericDef? paramslist returnSig?;
+
+genericDef: LANGLE (typeParam (COMMA typeParam)* COMMA?) RANGLE;
+paramslist: LPAREN (param (COMMA param)* COMMA?)? RPAREN;
+returnSig: type;
+
+param: ident (COLON type)?;

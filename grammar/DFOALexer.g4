@@ -5,6 +5,8 @@ PRINT: 'print';
 NOT: 'not';
 AND: 'and';
 OR: 'or';
+AS: 'as';
+NEW: 'new';
 
 EQEQ: '==';
 LE: '<=';
@@ -26,6 +28,7 @@ STAR: '*';
 SLASH: '/';
 DOT: '.';
 COMMA: ',';
+COLON: ':';
 
 fragment UNICODE_ESC_SEQ: 'u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F];
 fragment STRLIKE_ESC_SEQ: '\\' (UNICODE_ESC_SEQ | .);

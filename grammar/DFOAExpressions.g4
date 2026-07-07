@@ -1,4 +1,5 @@
 parser grammar DFOAExpressions;
+import DFOATypes;
 options {
     tokenVocab=DFOALexer;
 }
@@ -8,7 +9,7 @@ expr: or;
 or: and (OR and)*;
 and: not (AND not)*;
 not: NOT not | comparison;
-comparison: addSub (compOp addSub)*;
+comparison: addSub (compOp addSub)?;
 compOp: EQEQ | NEQ | LE | GE | LANGLE | RANGLE;
 addSub: multDiv (addSubOp multDiv)*;
 addSubOp: PLUS | MINUS;
@@ -20,14 +21,16 @@ funcInvoke: LPAREN (expr (COMMA expr)* COMMA?)? RPAREN;
 
 trail: trail LBRACK expr RBRACK #subscript
     | trail DOT INTEGER #tupleAccess
-    | trail DOT ident funcInvoke? #attribute
-    | atom funcInvoke? #atomTrail
+    | trail AS type #typeAlias
+    | trail DOT ident #attribute
+    | trail generics? funcInvoke #funcCallTrail
+    | atom #atomTrail
     ;
 
-atom: list | tuple | literal | LPAREN expr RPAREN;
+atom: list | tuple | literal | ident | newExpr | LPAREN expr RPAREN;
+
+newExpr: NEW expr generics? funcInvoke;
+
 literal: INTEGER | FLOAT | STRING | TEXT;
-
 list: LBRACK (expr (COMMA expr)* COMMA?)? RBRACK;
-tuple: LPAREN (expr COMMA | expr (COMMA expr)+) RPAREN;
-
-ident: SIMPLE_IDENT | COMPLEX_IDENT;
+tuple: LPAREN (expr COMMA | expr (COMMA expr)+ COMMA?)? RPAREN;

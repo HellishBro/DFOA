@@ -3,11 +3,11 @@ import { Identifier, Node } from "./ast.js";
 import { IntegerType, FloatType } from "lang/type/numerics.js";
 import { StringType, TextType } from "lang/type/strings.js";
 import { Type } from "lang/type/base.js";
+import { TypeNode } from "./types.js";
 
 export abstract class Expression extends Node {
     constructor(public type: Type, span: Span) { super(span); }
 }
-
 
 
 export enum BinaryOperators {
@@ -44,29 +44,34 @@ export class UnOp extends Expression {
 
 
 
-export abstract class Trailed extends Expression {
-    constructor(public value: Expression, type: Type, span: Span) { super(type, span); }
+export class Subscript extends Expression {
+    constructor(public value: Expression, public subscription: Expression, type: Type, span: Span) { super(type, span); }
 }
 
-export class Subscript extends Trailed {
-    constructor(value: Expression, public subscription: Expression, type: Type, span: Span) { super(value, type, span); }
+export class TupleSubscript extends Expression {
+    constructor(public value: Expression, public index: LiteralInteger, type: Type, span: Span) { super(type, span); }
 }
 
-export class TupleSubscript extends Trailed {
-    constructor(value: Expression, public index: LiteralInteger, type: Type, span: Span) { super(value, type, span); }
+export class Attribute extends Expression {
+    constructor(public value: Expression, public attribute: Identifier, type: Type, span: Span) { super(type, span); }
 }
 
-export class Attribute extends Trailed {
-    constructor(value: Expression, public attribute: Identifier, type: Type, span: Span) { super(value, type, span); }
-}
-
-export class FunctionCall extends Trailed {
-    constructor(value: Expression, public args: Expression[], type: Type, span: Span) { super(value, type, span); }
+export class FunctionCall extends Expression {
+    constructor(public value: Expression, public args: Expression[], public generics: TypeNode[], type: Type, span: Span) { super(type, span); }
 }
 
 
+export class As extends Expression {
+    constructor(public value: Expression, public alias: TypeNode, type: Type, span: Span) { super(type, span); }
+}
 
-export type Literal = LiteralString;
+
+export class New extends Expression {
+    constructor(public value: Expression, public args: Expression[], public generics: TypeNode[], type: Type, span: Span) { super(type, span); }
+}
+
+
+export type Literal = LiteralString | LiteralText | LiteralInteger | LiteralFloat;
 
 export class LiteralString extends Expression {
     constructor(public content: string, span: Span) { super(StringType, span); }
@@ -91,4 +96,8 @@ export class List extends Expression {
 
 export class Tuple extends Expression {
     constructor(public items: Expression[], type: Type, span: Span) { super(type, span); }
+}
+
+export class Variable extends Expression {
+    constructor(public name: Identifier, type: Type, span: Span) { super(type, span); }
 }

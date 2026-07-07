@@ -16,80 +16,94 @@ export class DFOAParser extends antlr.Parser {
     public static readonly NOT = 3;
     public static readonly AND = 4;
     public static readonly OR = 5;
-    public static readonly EQEQ = 6;
-    public static readonly LE = 7;
-    public static readonly GE = 8;
-    public static readonly NEQ = 9;
-    public static readonly LANGLE = 10;
-    public static readonly RANGLE = 11;
-    public static readonly LBRACE = 12;
-    public static readonly RBRACE = 13;
-    public static readonly LPAREN = 14;
-    public static readonly RPAREN = 15;
-    public static readonly LBRACK = 16;
-    public static readonly RBRACK = 17;
-    public static readonly SEMI = 18;
-    public static readonly PLUS = 19;
-    public static readonly MINUS = 20;
-    public static readonly STAR = 21;
-    public static readonly SLASH = 22;
-    public static readonly DOT = 23;
-    public static readonly COMMA = 24;
-    public static readonly SIMPLE_IDENT = 25;
-    public static readonly COMPLEX_IDENT = 26;
-    public static readonly STRING = 27;
-    public static readonly TEXT = 28;
-    public static readonly INTEGER = 29;
-    public static readonly FLOAT = 30;
-    public static readonly WS = 31;
-    public static readonly COMMENT = 32;
-    public static readonly MULT_LINE_COMMENT = 33;
+    public static readonly AS = 6;
+    public static readonly NEW = 7;
+    public static readonly EQEQ = 8;
+    public static readonly LE = 9;
+    public static readonly GE = 10;
+    public static readonly NEQ = 11;
+    public static readonly LANGLE = 12;
+    public static readonly RANGLE = 13;
+    public static readonly LBRACE = 14;
+    public static readonly RBRACE = 15;
+    public static readonly LPAREN = 16;
+    public static readonly RPAREN = 17;
+    public static readonly LBRACK = 18;
+    public static readonly RBRACK = 19;
+    public static readonly SEMI = 20;
+    public static readonly PLUS = 21;
+    public static readonly MINUS = 22;
+    public static readonly STAR = 23;
+    public static readonly SLASH = 24;
+    public static readonly DOT = 25;
+    public static readonly COMMA = 26;
+    public static readonly COLON = 27;
+    public static readonly SIMPLE_IDENT = 28;
+    public static readonly COMPLEX_IDENT = 29;
+    public static readonly STRING = 30;
+    public static readonly TEXT = 31;
+    public static readonly INTEGER = 32;
+    public static readonly FLOAT = 33;
+    public static readonly WS = 34;
+    public static readonly COMMENT = 35;
+    public static readonly MULT_LINE_COMMENT = 36;
     public static readonly RULE_start = 0;
     public static readonly RULE_tlStatement = 1;
     public static readonly RULE_func = 2;
-    public static readonly RULE_paramslist = 3;
-    public static readonly RULE_statement = 4;
-    public static readonly RULE_printStatement = 5;
-    public static readonly RULE_exprStatement = 6;
-    public static readonly RULE_semi = 7;
-    public static readonly RULE_block = 8;
-    public static readonly RULE_expr = 9;
-    public static readonly RULE_or = 10;
-    public static readonly RULE_and = 11;
-    public static readonly RULE_not = 12;
-    public static readonly RULE_comparison = 13;
-    public static readonly RULE_compOp = 14;
-    public static readonly RULE_addSub = 15;
-    public static readonly RULE_addSubOp = 16;
-    public static readonly RULE_multDiv = 17;
-    public static readonly RULE_multDivOp = 18;
-    public static readonly RULE_unop = 19;
-    public static readonly RULE_funcInvoke = 20;
-    public static readonly RULE_trail = 21;
-    public static readonly RULE_atom = 22;
-    public static readonly RULE_literal = 23;
-    public static readonly RULE_list = 24;
-    public static readonly RULE_tuple = 25;
-    public static readonly RULE_ident = 26;
+    public static readonly RULE_signature = 3;
+    public static readonly RULE_genericDef = 4;
+    public static readonly RULE_paramslist = 5;
+    public static readonly RULE_returnSig = 6;
+    public static readonly RULE_param = 7;
+    public static readonly RULE_statement = 8;
+    public static readonly RULE_printStatement = 9;
+    public static readonly RULE_exprStatement = 10;
+    public static readonly RULE_semi = 11;
+    public static readonly RULE_block = 12;
+    public static readonly RULE_expr = 13;
+    public static readonly RULE_or = 14;
+    public static readonly RULE_and = 15;
+    public static readonly RULE_not = 16;
+    public static readonly RULE_comparison = 17;
+    public static readonly RULE_compOp = 18;
+    public static readonly RULE_addSub = 19;
+    public static readonly RULE_addSubOp = 20;
+    public static readonly RULE_multDiv = 21;
+    public static readonly RULE_multDivOp = 22;
+    public static readonly RULE_unop = 23;
+    public static readonly RULE_funcInvoke = 24;
+    public static readonly RULE_trail = 25;
+    public static readonly RULE_atom = 26;
+    public static readonly RULE_newExpr = 27;
+    public static readonly RULE_literal = 28;
+    public static readonly RULE_list = 29;
+    public static readonly RULE_tuple = 30;
+    public static readonly RULE_type = 31;
+    public static readonly RULE_generics = 32;
+    public static readonly RULE_typeParam = 33;
+    public static readonly RULE_ident = 34;
 
     public static readonly literalNames = [
-        null, "'func'", "'print'", "'not'", "'and'", "'or'", "'=='", "'<='", 
-        "'>='", "'!='", "'<'", "'>'", "'{'", "'}'", "'('", "')'", "'['", 
-        "']'", "';'", "'+'", "'-'", "'*'", "'/'", "'.'", "','"
+        null, "'func'", "'print'", "'not'", "'and'", "'or'", "'as'", "'new'", 
+        "'=='", "'<='", "'>='", "'!='", "'<'", "'>'", "'{'", "'}'", "'('", 
+        "')'", "'['", "']'", "';'", "'+'", "'-'", "'*'", "'/'", "'.'", "','", 
+        "':'"
     ];
 
     public static readonly symbolicNames = [
-        null, "FUNC", "PRINT", "NOT", "AND", "OR", "EQEQ", "LE", "GE", "NEQ", 
-        "LANGLE", "RANGLE", "LBRACE", "RBRACE", "LPAREN", "RPAREN", "LBRACK", 
-        "RBRACK", "SEMI", "PLUS", "MINUS", "STAR", "SLASH", "DOT", "COMMA", 
-        "SIMPLE_IDENT", "COMPLEX_IDENT", "STRING", "TEXT", "INTEGER", "FLOAT", 
-        "WS", "COMMENT", "MULT_LINE_COMMENT"
+        null, "FUNC", "PRINT", "NOT", "AND", "OR", "AS", "NEW", "EQEQ", 
+        "LE", "GE", "NEQ", "LANGLE", "RANGLE", "LBRACE", "RBRACE", "LPAREN", 
+        "RPAREN", "LBRACK", "RBRACK", "SEMI", "PLUS", "MINUS", "STAR", "SLASH", 
+        "DOT", "COMMA", "COLON", "SIMPLE_IDENT", "COMPLEX_IDENT", "STRING", 
+        "TEXT", "INTEGER", "FLOAT", "WS", "COMMENT", "MULT_LINE_COMMENT"
     ];
     public static readonly ruleNames = [
-        "start", "tlStatement", "func", "paramslist", "statement", "printStatement", 
-        "exprStatement", "semi", "block", "expr", "or", "and", "not", "comparison", 
-        "compOp", "addSub", "addSubOp", "multDiv", "multDivOp", "unop", 
-        "funcInvoke", "trail", "atom", "literal", "list", "tuple", "ident",
+        "start", "tlStatement", "func", "signature", "genericDef", "paramslist", 
+        "returnSig", "param", "statement", "printStatement", "exprStatement", 
+        "semi", "block", "expr", "or", "and", "not", "comparison", "compOp", 
+        "addSub", "addSubOp", "multDiv", "multDivOp", "unop", "funcInvoke", 
+        "trail", "atom", "newExpr", "literal", "list", "tuple", "type", 
+        "generics", "typeParam", "ident",
     ];
 
     public get grammarFileName(): string { return "DFOA.g4"; }
@@ -113,21 +127,21 @@ export class DFOAParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 57;
+            this.state = 73;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             while (_la === 1) {
                 {
                 {
-                this.state = 54;
+                this.state = 70;
                 this.tlStatement();
                 }
                 }
-                this.state = 59;
+                this.state = 75;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
-            this.state = 60;
+            this.state = 76;
             this.match(DFOAParser.EOF);
             }
         }
@@ -150,7 +164,7 @@ export class DFOAParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 62;
+            this.state = 78;
             this.func();
             }
         }
@@ -173,14 +187,117 @@ export class DFOAParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 64;
+            this.state = 80;
             this.match(DFOAParser.FUNC);
-            this.state = 65;
+            this.state = 81;
             this.ident();
-            this.state = 66;
-            this.paramslist();
-            this.state = 67;
+            this.state = 82;
+            this.signature();
+            this.state = 83;
             this.block();
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public signature(): SignatureContext {
+        let localContext = new SignatureContext(this.context, this.state);
+        this.enterRule(localContext, 6, DFOAParser.RULE_signature);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 86;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 12) {
+                {
+                this.state = 85;
+                this.genericDef();
+                }
+            }
+
+            this.state = 88;
+            this.paramslist();
+            this.state = 90;
+            this.errorHandler.sync(this);
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 2, this.context) ) {
+            case 1:
+                {
+                this.state = 89;
+                this.returnSig();
+                }
+                break;
+            }
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public genericDef(): GenericDefContext {
+        let localContext = new GenericDefContext(this.context, this.state);
+        this.enterRule(localContext, 8, DFOAParser.RULE_genericDef);
+        let _la: number;
+        try {
+            let alternative: number;
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 92;
+            this.match(DFOAParser.LANGLE);
+            {
+            this.state = 93;
+            this.typeParam();
+            this.state = 98;
+            this.errorHandler.sync(this);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 3, this.context);
+            while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
+                if (alternative === 1) {
+                    {
+                    {
+                    this.state = 94;
+                    this.match(DFOAParser.COMMA);
+                    this.state = 95;
+                    this.typeParam();
+                    }
+                    }
+                }
+                this.state = 100;
+                this.errorHandler.sync(this);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 3, this.context);
+            }
+            this.state = 102;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 26) {
+                {
+                this.state = 101;
+                this.match(DFOAParser.COMMA);
+                }
+            }
+
+            }
+            this.state = 104;
+            this.match(DFOAParser.RANGLE);
             }
         }
         catch (re) {
@@ -198,14 +315,113 @@ export class DFOAParser extends antlr.Parser {
     }
     public paramslist(): ParamslistContext {
         let localContext = new ParamslistContext(this.context, this.state);
-        this.enterRule(localContext, 6, DFOAParser.RULE_paramslist);
+        this.enterRule(localContext, 10, DFOAParser.RULE_paramslist);
+        let _la: number;
+        try {
+            let alternative: number;
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 106;
+            this.match(DFOAParser.LPAREN);
+            this.state = 118;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 28 || _la === 29) {
+                {
+                this.state = 107;
+                this.param();
+                this.state = 112;
+                this.errorHandler.sync(this);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 5, this.context);
+                while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
+                    if (alternative === 1) {
+                        {
+                        {
+                        this.state = 108;
+                        this.match(DFOAParser.COMMA);
+                        this.state = 109;
+                        this.param();
+                        }
+                        }
+                    }
+                    this.state = 114;
+                    this.errorHandler.sync(this);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 5, this.context);
+                }
+                this.state = 116;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if (_la === 26) {
+                    {
+                    this.state = 115;
+                    this.match(DFOAParser.COMMA);
+                    }
+                }
+
+                }
+            }
+
+            this.state = 120;
+            this.match(DFOAParser.RPAREN);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public returnSig(): ReturnSigContext {
+        let localContext = new ReturnSigContext(this.context, this.state);
+        this.enterRule(localContext, 12, DFOAParser.RULE_returnSig);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 69;
-            this.match(DFOAParser.LPAREN);
-            this.state = 70;
-            this.match(DFOAParser.RPAREN);
+            this.state = 122;
+            this.type_();
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public param(): ParamContext {
+        let localContext = new ParamContext(this.context, this.state);
+        this.enterRule(localContext, 14, DFOAParser.RULE_param);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 124;
+            this.ident();
+            this.state = 127;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 27) {
+                {
+                this.state = 125;
+                this.match(DFOAParser.COLON);
+                this.state = 126;
+                this.type_();
+                }
+            }
+
             }
         }
         catch (re) {
@@ -223,36 +439,39 @@ export class DFOAParser extends antlr.Parser {
     }
     public statement(): StatementContext {
         let localContext = new StatementContext(this.context, this.state);
-        this.enterRule(localContext, 8, DFOAParser.RULE_statement);
+        this.enterRule(localContext, 16, DFOAParser.RULE_statement);
         try {
-            this.state = 75;
+            this.state = 132;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case DFOAParser.PRINT:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 72;
+                this.state = 129;
                 this.printStatement();
                 }
                 break;
             case DFOAParser.NOT:
+            case DFOAParser.NEW:
             case DFOAParser.LPAREN:
             case DFOAParser.LBRACK:
             case DFOAParser.MINUS:
+            case DFOAParser.SIMPLE_IDENT:
+            case DFOAParser.COMPLEX_IDENT:
             case DFOAParser.STRING:
             case DFOAParser.TEXT:
             case DFOAParser.INTEGER:
             case DFOAParser.FLOAT:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 73;
+                this.state = 130;
                 this.exprStatement();
                 }
                 break;
             case DFOAParser.SEMI:
                 this.enterOuterAlt(localContext, 3);
                 {
-                this.state = 74;
+                this.state = 131;
                 this.semi();
                 }
                 break;
@@ -275,15 +494,15 @@ export class DFOAParser extends antlr.Parser {
     }
     public printStatement(): PrintStatementContext {
         let localContext = new PrintStatementContext(this.context, this.state);
-        this.enterRule(localContext, 10, DFOAParser.RULE_printStatement);
+        this.enterRule(localContext, 18, DFOAParser.RULE_printStatement);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 77;
+            this.state = 134;
             this.match(DFOAParser.PRINT);
-            this.state = 78;
+            this.state = 135;
             this.expr();
-            this.state = 79;
+            this.state = 136;
             this.match(DFOAParser.SEMI);
             }
         }
@@ -302,13 +521,13 @@ export class DFOAParser extends antlr.Parser {
     }
     public exprStatement(): ExprStatementContext {
         let localContext = new ExprStatementContext(this.context, this.state);
-        this.enterRule(localContext, 12, DFOAParser.RULE_exprStatement);
+        this.enterRule(localContext, 20, DFOAParser.RULE_exprStatement);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 81;
+            this.state = 138;
             this.expr();
-            this.state = 82;
+            this.state = 139;
             this.match(DFOAParser.SEMI);
             }
         }
@@ -327,11 +546,11 @@ export class DFOAParser extends antlr.Parser {
     }
     public semi(): SemiContext {
         let localContext = new SemiContext(this.context, this.state);
-        this.enterRule(localContext, 14, DFOAParser.RULE_semi);
+        this.enterRule(localContext, 22, DFOAParser.RULE_semi);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 84;
+            this.state = 141;
             this.match(DFOAParser.SEMI);
             }
         }
@@ -350,48 +569,51 @@ export class DFOAParser extends antlr.Parser {
     }
     public block(): BlockContext {
         let localContext = new BlockContext(this.context, this.state);
-        this.enterRule(localContext, 16, DFOAParser.RULE_block);
+        this.enterRule(localContext, 24, DFOAParser.RULE_block);
         let _la: number;
         try {
-            this.state = 95;
+            this.state = 152;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case DFOAParser.LBRACE:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 86;
+                this.state = 143;
                 this.match(DFOAParser.LBRACE);
-                this.state = 90;
+                this.state = 147;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 2014658572) !== 0)) {
+                while (((((_la - 2)) & ~0x1F) === 0 && ((1 << (_la - 2)) & 4229251107) !== 0)) {
                     {
                     {
-                    this.state = 87;
+                    this.state = 144;
                     this.statement();
                     }
                     }
-                    this.state = 92;
+                    this.state = 149;
                     this.errorHandler.sync(this);
                     _la = this.tokenStream.LA(1);
                 }
-                this.state = 93;
+                this.state = 150;
                 this.match(DFOAParser.RBRACE);
                 }
                 break;
             case DFOAParser.PRINT:
             case DFOAParser.NOT:
+            case DFOAParser.NEW:
             case DFOAParser.LPAREN:
             case DFOAParser.LBRACK:
             case DFOAParser.SEMI:
             case DFOAParser.MINUS:
+            case DFOAParser.SIMPLE_IDENT:
+            case DFOAParser.COMPLEX_IDENT:
             case DFOAParser.STRING:
             case DFOAParser.TEXT:
             case DFOAParser.INTEGER:
             case DFOAParser.FLOAT:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 94;
+                this.state = 151;
                 this.statement();
                 }
                 break;
@@ -414,11 +636,11 @@ export class DFOAParser extends antlr.Parser {
     }
     public expr(): ExprContext {
         let localContext = new ExprContext(this.context, this.state);
-        this.enterRule(localContext, 18, DFOAParser.RULE_expr);
+        this.enterRule(localContext, 26, DFOAParser.RULE_expr);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 97;
+            this.state = 154;
             this.or();
             }
         }
@@ -437,26 +659,26 @@ export class DFOAParser extends antlr.Parser {
     }
     public or(): OrContext {
         let localContext = new OrContext(this.context, this.state);
-        this.enterRule(localContext, 20, DFOAParser.RULE_or);
+        this.enterRule(localContext, 28, DFOAParser.RULE_or);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 99;
+            this.state = 156;
             this.and();
-            this.state = 104;
+            this.state = 161;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             while (_la === 5) {
                 {
                 {
-                this.state = 100;
+                this.state = 157;
                 this.match(DFOAParser.OR);
-                this.state = 101;
+                this.state = 158;
                 this.and();
                 }
                 }
-                this.state = 106;
+                this.state = 163;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
@@ -477,26 +699,26 @@ export class DFOAParser extends antlr.Parser {
     }
     public and(): AndContext {
         let localContext = new AndContext(this.context, this.state);
-        this.enterRule(localContext, 22, DFOAParser.RULE_and);
+        this.enterRule(localContext, 30, DFOAParser.RULE_and);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 107;
+            this.state = 164;
             this.not();
-            this.state = 112;
+            this.state = 169;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             while (_la === 4) {
                 {
                 {
-                this.state = 108;
+                this.state = 165;
                 this.match(DFOAParser.AND);
-                this.state = 109;
+                this.state = 166;
                 this.not();
                 }
                 }
-                this.state = 114;
+                this.state = 171;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
@@ -517,30 +739,33 @@ export class DFOAParser extends antlr.Parser {
     }
     public not(): NotContext {
         let localContext = new NotContext(this.context, this.state);
-        this.enterRule(localContext, 24, DFOAParser.RULE_not);
+        this.enterRule(localContext, 32, DFOAParser.RULE_not);
         try {
-            this.state = 118;
+            this.state = 175;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case DFOAParser.NOT:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 115;
+                this.state = 172;
                 this.match(DFOAParser.NOT);
-                this.state = 116;
+                this.state = 173;
                 this.not();
                 }
                 break;
+            case DFOAParser.NEW:
             case DFOAParser.LPAREN:
             case DFOAParser.LBRACK:
             case DFOAParser.MINUS:
+            case DFOAParser.SIMPLE_IDENT:
+            case DFOAParser.COMPLEX_IDENT:
             case DFOAParser.STRING:
             case DFOAParser.TEXT:
             case DFOAParser.INTEGER:
             case DFOAParser.FLOAT:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 117;
+                this.state = 174;
                 this.comparison();
                 }
                 break;
@@ -563,28 +788,23 @@ export class DFOAParser extends antlr.Parser {
     }
     public comparison(): ComparisonContext {
         let localContext = new ComparisonContext(this.context, this.state);
-        this.enterRule(localContext, 26, DFOAParser.RULE_comparison);
-        let _la: number;
+        this.enterRule(localContext, 34, DFOAParser.RULE_comparison);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 120;
+            this.state = 177;
             this.addSub();
-            this.state = 126;
+            this.state = 181;
             this.errorHandler.sync(this);
-            _la = this.tokenStream.LA(1);
-            while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 4032) !== 0)) {
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 15, this.context) ) {
+            case 1:
                 {
-                {
-                this.state = 121;
+                this.state = 178;
                 this.compOp();
-                this.state = 122;
+                this.state = 179;
                 this.addSub();
                 }
-                }
-                this.state = 128;
-                this.errorHandler.sync(this);
-                _la = this.tokenStream.LA(1);
+                break;
             }
             }
         }
@@ -603,14 +823,14 @@ export class DFOAParser extends antlr.Parser {
     }
     public compOp(): CompOpContext {
         let localContext = new CompOpContext(this.context, this.state);
-        this.enterRule(localContext, 28, DFOAParser.RULE_compOp);
+        this.enterRule(localContext, 36, DFOAParser.RULE_compOp);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 129;
+            this.state = 183;
             _la = this.tokenStream.LA(1);
-            if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 4032) !== 0))) {
+            if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 16128) !== 0))) {
             this.errorHandler.recoverInline(this);
             }
             else {
@@ -634,26 +854,26 @@ export class DFOAParser extends antlr.Parser {
     }
     public addSub(): AddSubContext {
         let localContext = new AddSubContext(this.context, this.state);
-        this.enterRule(localContext, 30, DFOAParser.RULE_addSub);
+        this.enterRule(localContext, 38, DFOAParser.RULE_addSub);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 131;
+            this.state = 185;
             this.multDiv();
-            this.state = 137;
+            this.state = 191;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            while (_la === 19 || _la === 20) {
+            while (_la === 21 || _la === 22) {
                 {
                 {
-                this.state = 132;
+                this.state = 186;
                 this.addSubOp();
-                this.state = 133;
+                this.state = 187;
                 this.multDiv();
                 }
                 }
-                this.state = 139;
+                this.state = 193;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
@@ -674,83 +894,12 @@ export class DFOAParser extends antlr.Parser {
     }
     public addSubOp(): AddSubOpContext {
         let localContext = new AddSubOpContext(this.context, this.state);
-        this.enterRule(localContext, 32, DFOAParser.RULE_addSubOp);
+        this.enterRule(localContext, 40, DFOAParser.RULE_addSubOp);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 140;
-            _la = this.tokenStream.LA(1);
-            if(!(_la === 19 || _la === 20)) {
-            this.errorHandler.recoverInline(this);
-            }
-            else {
-                this.errorHandler.reportMatch(this);
-                this.consume();
-            }
-            }
-        }
-        catch (re) {
-            if (re instanceof antlr.RecognitionException) {
-                this.errorHandler.reportError(this, re);
-                this.errorHandler.recover(this, re);
-            } else {
-                throw re;
-            }
-        }
-        finally {
-            this.exitRule();
-        }
-        return localContext;
-    }
-    public multDiv(): MultDivContext {
-        let localContext = new MultDivContext(this.context, this.state);
-        this.enterRule(localContext, 34, DFOAParser.RULE_multDiv);
-        let _la: number;
-        try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 142;
-            this.unop();
-            this.state = 148;
-            this.errorHandler.sync(this);
-            _la = this.tokenStream.LA(1);
-            while (_la === 21 || _la === 22) {
-                {
-                {
-                this.state = 143;
-                this.multDivOp();
-                this.state = 144;
-                this.unop();
-                }
-                }
-                this.state = 150;
-                this.errorHandler.sync(this);
-                _la = this.tokenStream.LA(1);
-            }
-            }
-        }
-        catch (re) {
-            if (re instanceof antlr.RecognitionException) {
-                this.errorHandler.reportError(this, re);
-                this.errorHandler.recover(this, re);
-            } else {
-                throw re;
-            }
-        }
-        finally {
-            this.exitRule();
-        }
-        return localContext;
-    }
-    public multDivOp(): MultDivOpContext {
-        let localContext = new MultDivOpContext(this.context, this.state);
-        this.enterRule(localContext, 36, DFOAParser.RULE_multDivOp);
-        let _la: number;
-        try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 151;
+            this.state = 194;
             _la = this.tokenStream.LA(1);
             if(!(_la === 21 || _la === 22)) {
             this.errorHandler.recoverInline(this);
@@ -774,31 +923,105 @@ export class DFOAParser extends antlr.Parser {
         }
         return localContext;
     }
+    public multDiv(): MultDivContext {
+        let localContext = new MultDivContext(this.context, this.state);
+        this.enterRule(localContext, 42, DFOAParser.RULE_multDiv);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 196;
+            this.unop();
+            this.state = 202;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            while (_la === 23 || _la === 24) {
+                {
+                {
+                this.state = 197;
+                this.multDivOp();
+                this.state = 198;
+                this.unop();
+                }
+                }
+                this.state = 204;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+            }
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public multDivOp(): MultDivOpContext {
+        let localContext = new MultDivOpContext(this.context, this.state);
+        this.enterRule(localContext, 44, DFOAParser.RULE_multDivOp);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 205;
+            _la = this.tokenStream.LA(1);
+            if(!(_la === 23 || _la === 24)) {
+            this.errorHandler.recoverInline(this);
+            }
+            else {
+                this.errorHandler.reportMatch(this);
+                this.consume();
+            }
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
     public unop(): UnopContext {
         let localContext = new UnopContext(this.context, this.state);
-        this.enterRule(localContext, 38, DFOAParser.RULE_unop);
+        this.enterRule(localContext, 46, DFOAParser.RULE_unop);
         try {
-            this.state = 156;
+            this.state = 210;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case DFOAParser.MINUS:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 153;
+                this.state = 207;
                 this.match(DFOAParser.MINUS);
-                this.state = 154;
+                this.state = 208;
                 this.unop();
                 }
                 break;
+            case DFOAParser.NEW:
             case DFOAParser.LPAREN:
             case DFOAParser.LBRACK:
+            case DFOAParser.SIMPLE_IDENT:
+            case DFOAParser.COMPLEX_IDENT:
             case DFOAParser.STRING:
             case DFOAParser.TEXT:
             case DFOAParser.INTEGER:
             case DFOAParser.FLOAT:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 155;
+                this.state = 209;
                 this.trail(0);
                 }
                 break;
@@ -821,45 +1044,45 @@ export class DFOAParser extends antlr.Parser {
     }
     public funcInvoke(): FuncInvokeContext {
         let localContext = new FuncInvokeContext(this.context, this.state);
-        this.enterRule(localContext, 40, DFOAParser.RULE_funcInvoke);
+        this.enterRule(localContext, 48, DFOAParser.RULE_funcInvoke);
         let _la: number;
         try {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 158;
+            this.state = 212;
             this.match(DFOAParser.LPAREN);
-            this.state = 170;
+            this.state = 224;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 2014396424) !== 0)) {
+            if (((((_la - 3)) & ~0x1F) === 0 && ((1 << (_la - 3)) & 2114494481) !== 0)) {
                 {
-                this.state = 159;
+                this.state = 213;
                 this.expr();
-                this.state = 164;
+                this.state = 218;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 11, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 19, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 160;
+                        this.state = 214;
                         this.match(DFOAParser.COMMA);
-                        this.state = 161;
+                        this.state = 215;
                         this.expr();
                         }
                         }
                     }
-                    this.state = 166;
+                    this.state = 220;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 11, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 19, this.context);
                 }
-                this.state = 168;
+                this.state = 222;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 24) {
+                if (_la === 26) {
                     {
-                    this.state = 167;
+                    this.state = 221;
                     this.match(DFOAParser.COMMA);
                     }
                 }
@@ -867,7 +1090,7 @@ export class DFOAParser extends antlr.Parser {
                 }
             }
 
-            this.state = 172;
+            this.state = 226;
             this.match(DFOAParser.RPAREN);
             }
         }
@@ -896,8 +1119,9 @@ export class DFOAParser extends antlr.Parser {
         let parentState = this.state;
         let localContext = new TrailContext(this.context, parentState);
         let previousContext = localContext;
-        let _startState = 42;
-        this.enterRecursionRule(localContext, 42, DFOAParser.RULE_trail, _p);
+        let _startState = 50;
+        this.enterRecursionRule(localContext, 50, DFOAParser.RULE_trail, _p);
+        let _la: number;
         try {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
@@ -907,23 +1131,13 @@ export class DFOAParser extends antlr.Parser {
             this.context = localContext;
             previousContext = localContext;
 
-            this.state = 175;
+            this.state = 229;
             this.atom();
-            this.state = 177;
-            this.errorHandler.sync(this);
-            switch (this.interpreter.adaptivePredict(this.tokenStream, 14, this.context) ) {
-            case 1:
-                {
-                this.state = 176;
-                this.funcInvoke();
-                }
-                break;
-            }
             }
             this.context!.stop = this.tokenStream.LT(-1);
-            this.state = 195;
+            this.state = 252;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 17, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 24, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                 if (alternative === 1) {
                     if (this.parseListeners != null) {
@@ -931,22 +1145,22 @@ export class DFOAParser extends antlr.Parser {
                     }
                     previousContext = localContext;
                     {
-                    this.state = 193;
+                    this.state = 250;
                     this.errorHandler.sync(this);
-                    switch (this.interpreter.adaptivePredict(this.tokenStream, 16, this.context) ) {
+                    switch (this.interpreter.adaptivePredict(this.tokenStream, 23, this.context) ) {
                     case 1:
                         {
                         localContext = new SubscriptContext(new TrailContext(parentContext, parentState));
                         this.pushNewRecursionContext(localContext, _startState, DFOAParser.RULE_trail);
-                        this.state = 179;
-                        if (!(this.precpred(this.context, 4))) {
-                            throw this.createFailedPredicateException("this.precpred(this.context, 4)");
+                        this.state = 231;
+                        if (!(this.precpred(this.context, 6))) {
+                            throw this.createFailedPredicateException("this.precpred(this.context, 6)");
                         }
-                        this.state = 180;
+                        this.state = 232;
                         this.match(DFOAParser.LBRACK);
-                        this.state = 181;
+                        this.state = 233;
                         this.expr();
-                        this.state = 182;
+                        this.state = 234;
                         this.match(DFOAParser.RBRACK);
                         }
                         break;
@@ -954,46 +1168,72 @@ export class DFOAParser extends antlr.Parser {
                         {
                         localContext = new TupleAccessContext(new TrailContext(parentContext, parentState));
                         this.pushNewRecursionContext(localContext, _startState, DFOAParser.RULE_trail);
-                        this.state = 184;
-                        if (!(this.precpred(this.context, 3))) {
-                            throw this.createFailedPredicateException("this.precpred(this.context, 3)");
+                        this.state = 236;
+                        if (!(this.precpred(this.context, 5))) {
+                            throw this.createFailedPredicateException("this.precpred(this.context, 5)");
                         }
-                        this.state = 185;
+                        this.state = 237;
                         this.match(DFOAParser.DOT);
-                        this.state = 186;
+                        this.state = 238;
                         this.match(DFOAParser.INTEGER);
                         }
                         break;
                     case 3:
                         {
+                        localContext = new TypeAliasContext(new TrailContext(parentContext, parentState));
+                        this.pushNewRecursionContext(localContext, _startState, DFOAParser.RULE_trail);
+                        this.state = 239;
+                        if (!(this.precpred(this.context, 4))) {
+                            throw this.createFailedPredicateException("this.precpred(this.context, 4)");
+                        }
+                        this.state = 240;
+                        this.match(DFOAParser.AS);
+                        this.state = 241;
+                        this.type_();
+                        }
+                        break;
+                    case 4:
+                        {
                         localContext = new AttributeContext(new TrailContext(parentContext, parentState));
                         this.pushNewRecursionContext(localContext, _startState, DFOAParser.RULE_trail);
-                        this.state = 187;
+                        this.state = 242;
+                        if (!(this.precpred(this.context, 3))) {
+                            throw this.createFailedPredicateException("this.precpred(this.context, 3)");
+                        }
+                        this.state = 243;
+                        this.match(DFOAParser.DOT);
+                        this.state = 244;
+                        this.ident();
+                        }
+                        break;
+                    case 5:
+                        {
+                        localContext = new FuncCallTrailContext(new TrailContext(parentContext, parentState));
+                        this.pushNewRecursionContext(localContext, _startState, DFOAParser.RULE_trail);
+                        this.state = 245;
                         if (!(this.precpred(this.context, 2))) {
                             throw this.createFailedPredicateException("this.precpred(this.context, 2)");
                         }
-                        this.state = 188;
-                        this.match(DFOAParser.DOT);
-                        this.state = 189;
-                        this.ident();
-                        this.state = 191;
+                        this.state = 247;
                         this.errorHandler.sync(this);
-                        switch (this.interpreter.adaptivePredict(this.tokenStream, 15, this.context) ) {
-                        case 1:
+                        _la = this.tokenStream.LA(1);
+                        if (_la === 12) {
                             {
-                            this.state = 190;
-                            this.funcInvoke();
+                            this.state = 246;
+                            this.generics();
                             }
-                            break;
                         }
+
+                        this.state = 249;
+                        this.funcInvoke();
                         }
                         break;
                     }
                     }
                 }
-                this.state = 197;
+                this.state = 254;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 17, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 24, this.context);
             }
             }
         }
@@ -1012,40 +1252,54 @@ export class DFOAParser extends antlr.Parser {
     }
     public atom(): AtomContext {
         let localContext = new AtomContext(this.context, this.state);
-        this.enterRule(localContext, 44, DFOAParser.RULE_atom);
+        this.enterRule(localContext, 52, DFOAParser.RULE_atom);
         try {
-            this.state = 205;
+            this.state = 264;
             this.errorHandler.sync(this);
-            switch (this.interpreter.adaptivePredict(this.tokenStream, 18, this.context) ) {
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 25, this.context) ) {
             case 1:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 198;
+                this.state = 255;
                 this.list();
                 }
                 break;
             case 2:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 199;
+                this.state = 256;
                 this.tuple();
                 }
                 break;
             case 3:
                 this.enterOuterAlt(localContext, 3);
                 {
-                this.state = 200;
+                this.state = 257;
                 this.literal();
                 }
                 break;
             case 4:
                 this.enterOuterAlt(localContext, 4);
                 {
-                this.state = 201;
+                this.state = 258;
+                this.ident();
+                }
+                break;
+            case 5:
+                this.enterOuterAlt(localContext, 5);
+                {
+                this.state = 259;
+                this.newExpr();
+                }
+                break;
+            case 6:
+                this.enterOuterAlt(localContext, 6);
+                {
+                this.state = 260;
                 this.match(DFOAParser.LPAREN);
-                this.state = 202;
+                this.state = 261;
                 this.expr();
-                this.state = 203;
+                this.state = 262;
                 this.match(DFOAParser.RPAREN);
                 }
                 break;
@@ -1064,16 +1318,54 @@ export class DFOAParser extends antlr.Parser {
         }
         return localContext;
     }
-    public literal(): LiteralContext {
-        let localContext = new LiteralContext(this.context, this.state);
-        this.enterRule(localContext, 46, DFOAParser.RULE_literal);
+    public newExpr(): NewExprContext {
+        let localContext = new NewExprContext(this.context, this.state);
+        this.enterRule(localContext, 54, DFOAParser.RULE_newExpr);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 207;
+            this.state = 266;
+            this.match(DFOAParser.NEW);
+            this.state = 267;
+            this.expr();
+            this.state = 269;
+            this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 2013265920) !== 0))) {
+            if (_la === 12) {
+                {
+                this.state = 268;
+                this.generics();
+                }
+            }
+
+            this.state = 271;
+            this.funcInvoke();
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public literal(): LiteralContext {
+        let localContext = new LiteralContext(this.context, this.state);
+        this.enterRule(localContext, 56, DFOAParser.RULE_literal);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 273;
+            _la = this.tokenStream.LA(1);
+            if(!(((((_la - 30)) & ~0x1F) === 0 && ((1 << (_la - 30)) & 15) !== 0))) {
             this.errorHandler.recoverInline(this);
             }
             else {
@@ -1097,45 +1389,45 @@ export class DFOAParser extends antlr.Parser {
     }
     public list(): ListContext {
         let localContext = new ListContext(this.context, this.state);
-        this.enterRule(localContext, 48, DFOAParser.RULE_list);
+        this.enterRule(localContext, 58, DFOAParser.RULE_list);
         let _la: number;
         try {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 209;
+            this.state = 275;
             this.match(DFOAParser.LBRACK);
-            this.state = 221;
+            this.state = 287;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 2014396424) !== 0)) {
+            if (((((_la - 3)) & ~0x1F) === 0 && ((1 << (_la - 3)) & 2114494481) !== 0)) {
                 {
-                this.state = 210;
+                this.state = 276;
                 this.expr();
-                this.state = 215;
+                this.state = 281;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 19, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 211;
+                        this.state = 277;
                         this.match(DFOAParser.COMMA);
-                        this.state = 212;
+                        this.state = 278;
                         this.expr();
                         }
                         }
                     }
-                    this.state = 217;
+                    this.state = 283;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 19, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
                 }
-                this.state = 219;
+                this.state = 285;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 24) {
+                if (_la === 26) {
                     {
-                    this.state = 218;
+                    this.state = 284;
                     this.match(DFOAParser.COMMA);
                     }
                 }
@@ -1143,7 +1435,7 @@ export class DFOAParser extends antlr.Parser {
                 }
             }
 
-            this.state = 223;
+            this.state = 289;
             this.match(DFOAParser.RBRACK);
             }
         }
@@ -1162,49 +1454,250 @@ export class DFOAParser extends antlr.Parser {
     }
     public tuple(): TupleContext {
         let localContext = new TupleContext(this.context, this.state);
-        this.enterRule(localContext, 50, DFOAParser.RULE_tuple);
+        this.enterRule(localContext, 60, DFOAParser.RULE_tuple);
         let _la: number;
         try {
+            let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 225;
+            this.state = 291;
             this.match(DFOAParser.LPAREN);
-            this.state = 236;
+            this.state = 305;
             this.errorHandler.sync(this);
-            switch (this.interpreter.adaptivePredict(this.tokenStream, 23, this.context) ) {
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 32, this.context) ) {
             case 1:
                 {
-                this.state = 226;
+                this.state = 292;
                 this.expr();
-                this.state = 227;
+                this.state = 293;
                 this.match(DFOAParser.COMMA);
                 }
                 break;
             case 2:
                 {
-                this.state = 229;
+                this.state = 295;
                 this.expr();
-                this.state = 232;
+                this.state = 298;
+                this.errorHandler.sync(this);
+                alternative = 1;
+                do {
+                    switch (alternative) {
+                    case 1:
+                        {
+                        {
+                        this.state = 296;
+                        this.match(DFOAParser.COMMA);
+                        this.state = 297;
+                        this.expr();
+                        }
+                        }
+                        break;
+                    default:
+                        throw new antlr.NoViableAltException(this);
+                    }
+                    this.state = 300;
+                    this.errorHandler.sync(this);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+                } while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER);
+                this.state = 303;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                do {
+                if (_la === 26) {
                     {
-                    {
-                    this.state = 230;
+                    this.state = 302;
                     this.match(DFOAParser.COMMA);
-                    this.state = 231;
-                    this.expr();
                     }
-                    }
-                    this.state = 234;
-                    this.errorHandler.sync(this);
-                    _la = this.tokenStream.LA(1);
-                } while (_la === 24);
+                }
+
                 }
                 break;
             }
-            this.state = 238;
+            this.state = 307;
             this.match(DFOAParser.RPAREN);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public type_(): TypeContext {
+        let localContext = new TypeContext(this.context, this.state);
+        this.enterRule(localContext, 62, DFOAParser.RULE_type);
+        let _la: number;
+        try {
+            let alternative: number;
+            this.state = 332;
+            this.errorHandler.sync(this);
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 37, this.context) ) {
+            case 1:
+                localContext = new TupleTypeContext(localContext);
+                this.enterOuterAlt(localContext, 1);
+                {
+                this.state = 309;
+                this.match(DFOAParser.LPAREN);
+                this.state = 321;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 805371904) !== 0)) {
+                    {
+                    this.state = 310;
+                    this.type_();
+                    this.state = 315;
+                    this.errorHandler.sync(this);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
+                    while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
+                        if (alternative === 1) {
+                            {
+                            {
+                            this.state = 311;
+                            this.match(DFOAParser.COMMA);
+                            this.state = 312;
+                            this.type_();
+                            }
+                            }
+                        }
+                        this.state = 317;
+                        this.errorHandler.sync(this);
+                        alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
+                    }
+                    this.state = 319;
+                    this.errorHandler.sync(this);
+                    _la = this.tokenStream.LA(1);
+                    if (_la === 26) {
+                        {
+                        this.state = 318;
+                        this.match(DFOAParser.COMMA);
+                        }
+                    }
+
+                    }
+                }
+
+                this.state = 323;
+                this.match(DFOAParser.RPAREN);
+                }
+                break;
+            case 2:
+                localContext = new GroupingTypeContext(localContext);
+                this.enterOuterAlt(localContext, 2);
+                {
+                this.state = 324;
+                this.match(DFOAParser.LPAREN);
+                this.state = 325;
+                this.type_();
+                this.state = 326;
+                this.match(DFOAParser.RPAREN);
+                }
+                break;
+            case 3:
+                localContext = new BasicTypeContext(localContext);
+                this.enterOuterAlt(localContext, 3);
+                {
+                this.state = 328;
+                this.ident();
+                this.state = 330;
+                this.errorHandler.sync(this);
+                switch (this.interpreter.adaptivePredict(this.tokenStream, 36, this.context) ) {
+                case 1:
+                    {
+                    this.state = 329;
+                    this.generics();
+                    }
+                    break;
+                }
+                }
+                break;
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public generics(): GenericsContext {
+        let localContext = new GenericsContext(this.context, this.state);
+        this.enterRule(localContext, 64, DFOAParser.RULE_generics);
+        let _la: number;
+        try {
+            let alternative: number;
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 334;
+            this.match(DFOAParser.LANGLE);
+            {
+            this.state = 335;
+            this.type_();
+            this.state = 340;
+            this.errorHandler.sync(this);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 38, this.context);
+            while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
+                if (alternative === 1) {
+                    {
+                    {
+                    this.state = 336;
+                    this.match(DFOAParser.COMMA);
+                    this.state = 337;
+                    this.type_();
+                    }
+                    }
+                }
+                this.state = 342;
+                this.errorHandler.sync(this);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 38, this.context);
+            }
+            this.state = 344;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 26) {
+                {
+                this.state = 343;
+                this.match(DFOAParser.COMMA);
+                }
+            }
+
+            }
+            this.state = 346;
+            this.match(DFOAParser.RANGLE);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public typeParam(): TypeParamContext {
+        let localContext = new TypeParamContext(this.context, this.state);
+        this.enterRule(localContext, 66, DFOAParser.RULE_typeParam);
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 348;
+            this.ident();
             }
         }
         catch (re) {
@@ -1222,14 +1715,14 @@ export class DFOAParser extends antlr.Parser {
     }
     public ident(): IdentContext {
         let localContext = new IdentContext(this.context, this.state);
-        this.enterRule(localContext, 52, DFOAParser.RULE_ident);
+        this.enterRule(localContext, 68, DFOAParser.RULE_ident);
         let _la: number;
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 240;
+            this.state = 350;
             _la = this.tokenStream.LA(1);
-            if(!(_la === 25 || _la === 26)) {
+            if(!(_la === 28 || _la === 29)) {
             this.errorHandler.recoverInline(this);
             }
             else {
@@ -1254,7 +1747,7 @@ export class DFOAParser extends antlr.Parser {
 
     public override sempred(localContext: antlr.ParserRuleContext | null, ruleIndex: number, predIndex: number): boolean {
         switch (ruleIndex) {
-        case 21:
+        case 25:
             return this.trail_sempred(localContext as TrailContext, predIndex);
         }
         return true;
@@ -1262,99 +1755,146 @@ export class DFOAParser extends antlr.Parser {
     private trail_sempred(localContext: TrailContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 0:
-            return this.precpred(this.context, 4);
+            return this.precpred(this.context, 6);
         case 1:
-            return this.precpred(this.context, 3);
+            return this.precpred(this.context, 5);
         case 2:
+            return this.precpred(this.context, 4);
+        case 3:
+            return this.precpred(this.context, 3);
+        case 4:
             return this.precpred(this.context, 2);
         }
         return true;
     }
 
     public static readonly _serializedATN: number[] = [
-        4,1,33,243,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,36,353,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
-        1,0,5,0,56,8,0,10,0,12,0,59,9,0,1,0,1,0,1,1,1,1,1,2,1,2,1,2,1,2,
-        1,2,1,3,1,3,1,3,1,4,1,4,1,4,3,4,76,8,4,1,5,1,5,1,5,1,5,1,6,1,6,1,
-        6,1,7,1,7,1,8,1,8,5,8,89,8,8,10,8,12,8,92,9,8,1,8,1,8,3,8,96,8,8,
-        1,9,1,9,1,10,1,10,1,10,5,10,103,8,10,10,10,12,10,106,9,10,1,11,1,
-        11,1,11,5,11,111,8,11,10,11,12,11,114,9,11,1,12,1,12,1,12,3,12,119,
-        8,12,1,13,1,13,1,13,1,13,5,13,125,8,13,10,13,12,13,128,9,13,1,14,
-        1,14,1,15,1,15,1,15,1,15,5,15,136,8,15,10,15,12,15,139,9,15,1,16,
-        1,16,1,17,1,17,1,17,1,17,5,17,147,8,17,10,17,12,17,150,9,17,1,18,
-        1,18,1,19,1,19,1,19,3,19,157,8,19,1,20,1,20,1,20,1,20,5,20,163,8,
-        20,10,20,12,20,166,9,20,1,20,3,20,169,8,20,3,20,171,8,20,1,20,1,
-        20,1,21,1,21,1,21,3,21,178,8,21,1,21,1,21,1,21,1,21,1,21,1,21,1,
-        21,1,21,1,21,1,21,1,21,1,21,3,21,192,8,21,5,21,194,8,21,10,21,12,
-        21,197,9,21,1,22,1,22,1,22,1,22,1,22,1,22,1,22,3,22,206,8,22,1,23,
-        1,23,1,24,1,24,1,24,1,24,5,24,214,8,24,10,24,12,24,217,9,24,1,24,
-        3,24,220,8,24,3,24,222,8,24,1,24,1,24,1,25,1,25,1,25,1,25,1,25,1,
-        25,1,25,4,25,233,8,25,11,25,12,25,234,3,25,237,8,25,1,25,1,25,1,
-        26,1,26,1,26,0,1,42,27,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,
-        32,34,36,38,40,42,44,46,48,50,52,0,5,1,0,6,11,1,0,19,20,1,0,21,22,
-        1,0,27,30,1,0,25,26,243,0,57,1,0,0,0,2,62,1,0,0,0,4,64,1,0,0,0,6,
-        69,1,0,0,0,8,75,1,0,0,0,10,77,1,0,0,0,12,81,1,0,0,0,14,84,1,0,0,
-        0,16,95,1,0,0,0,18,97,1,0,0,0,20,99,1,0,0,0,22,107,1,0,0,0,24,118,
-        1,0,0,0,26,120,1,0,0,0,28,129,1,0,0,0,30,131,1,0,0,0,32,140,1,0,
-        0,0,34,142,1,0,0,0,36,151,1,0,0,0,38,156,1,0,0,0,40,158,1,0,0,0,
-        42,174,1,0,0,0,44,205,1,0,0,0,46,207,1,0,0,0,48,209,1,0,0,0,50,225,
-        1,0,0,0,52,240,1,0,0,0,54,56,3,2,1,0,55,54,1,0,0,0,56,59,1,0,0,0,
-        57,55,1,0,0,0,57,58,1,0,0,0,58,60,1,0,0,0,59,57,1,0,0,0,60,61,5,
-        0,0,1,61,1,1,0,0,0,62,63,3,4,2,0,63,3,1,0,0,0,64,65,5,1,0,0,65,66,
-        3,52,26,0,66,67,3,6,3,0,67,68,3,16,8,0,68,5,1,0,0,0,69,70,5,14,0,
-        0,70,71,5,15,0,0,71,7,1,0,0,0,72,76,3,10,5,0,73,76,3,12,6,0,74,76,
-        3,14,7,0,75,72,1,0,0,0,75,73,1,0,0,0,75,74,1,0,0,0,76,9,1,0,0,0,
-        77,78,5,2,0,0,78,79,3,18,9,0,79,80,5,18,0,0,80,11,1,0,0,0,81,82,
-        3,18,9,0,82,83,5,18,0,0,83,13,1,0,0,0,84,85,5,18,0,0,85,15,1,0,0,
-        0,86,90,5,12,0,0,87,89,3,8,4,0,88,87,1,0,0,0,89,92,1,0,0,0,90,88,
-        1,0,0,0,90,91,1,0,0,0,91,93,1,0,0,0,92,90,1,0,0,0,93,96,5,13,0,0,
-        94,96,3,8,4,0,95,86,1,0,0,0,95,94,1,0,0,0,96,17,1,0,0,0,97,98,3,
-        20,10,0,98,19,1,0,0,0,99,104,3,22,11,0,100,101,5,5,0,0,101,103,3,
-        22,11,0,102,100,1,0,0,0,103,106,1,0,0,0,104,102,1,0,0,0,104,105,
-        1,0,0,0,105,21,1,0,0,0,106,104,1,0,0,0,107,112,3,24,12,0,108,109,
-        5,4,0,0,109,111,3,24,12,0,110,108,1,0,0,0,111,114,1,0,0,0,112,110,
-        1,0,0,0,112,113,1,0,0,0,113,23,1,0,0,0,114,112,1,0,0,0,115,116,5,
-        3,0,0,116,119,3,24,12,0,117,119,3,26,13,0,118,115,1,0,0,0,118,117,
-        1,0,0,0,119,25,1,0,0,0,120,126,3,30,15,0,121,122,3,28,14,0,122,123,
-        3,30,15,0,123,125,1,0,0,0,124,121,1,0,0,0,125,128,1,0,0,0,126,124,
-        1,0,0,0,126,127,1,0,0,0,127,27,1,0,0,0,128,126,1,0,0,0,129,130,7,
-        0,0,0,130,29,1,0,0,0,131,137,3,34,17,0,132,133,3,32,16,0,133,134,
-        3,34,17,0,134,136,1,0,0,0,135,132,1,0,0,0,136,139,1,0,0,0,137,135,
-        1,0,0,0,137,138,1,0,0,0,138,31,1,0,0,0,139,137,1,0,0,0,140,141,7,
-        1,0,0,141,33,1,0,0,0,142,148,3,38,19,0,143,144,3,36,18,0,144,145,
-        3,38,19,0,145,147,1,0,0,0,146,143,1,0,0,0,147,150,1,0,0,0,148,146,
-        1,0,0,0,148,149,1,0,0,0,149,35,1,0,0,0,150,148,1,0,0,0,151,152,7,
-        2,0,0,152,37,1,0,0,0,153,154,5,20,0,0,154,157,3,38,19,0,155,157,
-        3,42,21,0,156,153,1,0,0,0,156,155,1,0,0,0,157,39,1,0,0,0,158,170,
-        5,14,0,0,159,164,3,18,9,0,160,161,5,24,0,0,161,163,3,18,9,0,162,
-        160,1,0,0,0,163,166,1,0,0,0,164,162,1,0,0,0,164,165,1,0,0,0,165,
-        168,1,0,0,0,166,164,1,0,0,0,167,169,5,24,0,0,168,167,1,0,0,0,168,
-        169,1,0,0,0,169,171,1,0,0,0,170,159,1,0,0,0,170,171,1,0,0,0,171,
-        172,1,0,0,0,172,173,5,15,0,0,173,41,1,0,0,0,174,175,6,21,-1,0,175,
-        177,3,44,22,0,176,178,3,40,20,0,177,176,1,0,0,0,177,178,1,0,0,0,
-        178,195,1,0,0,0,179,180,10,4,0,0,180,181,5,16,0,0,181,182,3,18,9,
-        0,182,183,5,17,0,0,183,194,1,0,0,0,184,185,10,3,0,0,185,186,5,23,
-        0,0,186,194,5,29,0,0,187,188,10,2,0,0,188,189,5,23,0,0,189,191,3,
-        52,26,0,190,192,3,40,20,0,191,190,1,0,0,0,191,192,1,0,0,0,192,194,
-        1,0,0,0,193,179,1,0,0,0,193,184,1,0,0,0,193,187,1,0,0,0,194,197,
-        1,0,0,0,195,193,1,0,0,0,195,196,1,0,0,0,196,43,1,0,0,0,197,195,1,
-        0,0,0,198,206,3,48,24,0,199,206,3,50,25,0,200,206,3,46,23,0,201,
-        202,5,14,0,0,202,203,3,18,9,0,203,204,5,15,0,0,204,206,1,0,0,0,205,
-        198,1,0,0,0,205,199,1,0,0,0,205,200,1,0,0,0,205,201,1,0,0,0,206,
-        45,1,0,0,0,207,208,7,3,0,0,208,47,1,0,0,0,209,221,5,16,0,0,210,215,
-        3,18,9,0,211,212,5,24,0,0,212,214,3,18,9,0,213,211,1,0,0,0,214,217,
-        1,0,0,0,215,213,1,0,0,0,215,216,1,0,0,0,216,219,1,0,0,0,217,215,
-        1,0,0,0,218,220,5,24,0,0,219,218,1,0,0,0,219,220,1,0,0,0,220,222,
-        1,0,0,0,221,210,1,0,0,0,221,222,1,0,0,0,222,223,1,0,0,0,223,224,
-        5,17,0,0,224,49,1,0,0,0,225,236,5,14,0,0,226,227,3,18,9,0,227,228,
-        5,24,0,0,228,237,1,0,0,0,229,232,3,18,9,0,230,231,5,24,0,0,231,233,
-        3,18,9,0,232,230,1,0,0,0,233,234,1,0,0,0,234,232,1,0,0,0,234,235,
-        1,0,0,0,235,237,1,0,0,0,236,226,1,0,0,0,236,229,1,0,0,0,237,238,
-        1,0,0,0,238,239,5,15,0,0,239,51,1,0,0,0,240,241,7,4,0,0,241,53,1,
-        0,0,0,24,57,75,90,95,104,112,118,126,137,148,156,164,168,170,177,
-        191,193,195,205,215,219,221,234,236
+        2,27,7,27,2,28,7,28,2,29,7,29,2,30,7,30,2,31,7,31,2,32,7,32,2,33,
+        7,33,2,34,7,34,1,0,5,0,72,8,0,10,0,12,0,75,9,0,1,0,1,0,1,1,1,1,1,
+        2,1,2,1,2,1,2,1,2,1,3,3,3,87,8,3,1,3,1,3,3,3,91,8,3,1,4,1,4,1,4,
+        1,4,5,4,97,8,4,10,4,12,4,100,9,4,1,4,3,4,103,8,4,1,4,1,4,1,5,1,5,
+        1,5,1,5,5,5,111,8,5,10,5,12,5,114,9,5,1,5,3,5,117,8,5,3,5,119,8,
+        5,1,5,1,5,1,6,1,6,1,7,1,7,1,7,3,7,128,8,7,1,8,1,8,1,8,3,8,133,8,
+        8,1,9,1,9,1,9,1,9,1,10,1,10,1,10,1,11,1,11,1,12,1,12,5,12,146,8,
+        12,10,12,12,12,149,9,12,1,12,1,12,3,12,153,8,12,1,13,1,13,1,14,1,
+        14,1,14,5,14,160,8,14,10,14,12,14,163,9,14,1,15,1,15,1,15,5,15,168,
+        8,15,10,15,12,15,171,9,15,1,16,1,16,1,16,3,16,176,8,16,1,17,1,17,
+        1,17,1,17,3,17,182,8,17,1,18,1,18,1,19,1,19,1,19,1,19,5,19,190,8,
+        19,10,19,12,19,193,9,19,1,20,1,20,1,21,1,21,1,21,1,21,5,21,201,8,
+        21,10,21,12,21,204,9,21,1,22,1,22,1,23,1,23,1,23,3,23,211,8,23,1,
+        24,1,24,1,24,1,24,5,24,217,8,24,10,24,12,24,220,9,24,1,24,3,24,223,
+        8,24,3,24,225,8,24,1,24,1,24,1,25,1,25,1,25,1,25,1,25,1,25,1,25,
+        1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,3,25,
+        248,8,25,1,25,5,25,251,8,25,10,25,12,25,254,9,25,1,26,1,26,1,26,
+        1,26,1,26,1,26,1,26,1,26,1,26,3,26,265,8,26,1,27,1,27,1,27,3,27,
+        270,8,27,1,27,1,27,1,28,1,28,1,29,1,29,1,29,1,29,5,29,280,8,29,10,
+        29,12,29,283,9,29,1,29,3,29,286,8,29,3,29,288,8,29,1,29,1,29,1,30,
+        1,30,1,30,1,30,1,30,1,30,1,30,4,30,299,8,30,11,30,12,30,300,1,30,
+        3,30,304,8,30,3,30,306,8,30,1,30,1,30,1,31,1,31,1,31,1,31,5,31,314,
+        8,31,10,31,12,31,317,9,31,1,31,3,31,320,8,31,3,31,322,8,31,1,31,
+        1,31,1,31,1,31,1,31,1,31,1,31,3,31,331,8,31,3,31,333,8,31,1,32,1,
+        32,1,32,1,32,5,32,339,8,32,10,32,12,32,342,9,32,1,32,3,32,345,8,
+        32,1,32,1,32,1,33,1,33,1,34,1,34,1,34,0,1,50,35,0,2,4,6,8,10,12,
+        14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,
+        58,60,62,64,66,68,0,5,1,0,8,13,1,0,21,22,1,0,23,24,1,0,30,33,1,0,
+        28,29,367,0,73,1,0,0,0,2,78,1,0,0,0,4,80,1,0,0,0,6,86,1,0,0,0,8,
+        92,1,0,0,0,10,106,1,0,0,0,12,122,1,0,0,0,14,124,1,0,0,0,16,132,1,
+        0,0,0,18,134,1,0,0,0,20,138,1,0,0,0,22,141,1,0,0,0,24,152,1,0,0,
+        0,26,154,1,0,0,0,28,156,1,0,0,0,30,164,1,0,0,0,32,175,1,0,0,0,34,
+        177,1,0,0,0,36,183,1,0,0,0,38,185,1,0,0,0,40,194,1,0,0,0,42,196,
+        1,0,0,0,44,205,1,0,0,0,46,210,1,0,0,0,48,212,1,0,0,0,50,228,1,0,
+        0,0,52,264,1,0,0,0,54,266,1,0,0,0,56,273,1,0,0,0,58,275,1,0,0,0,
+        60,291,1,0,0,0,62,332,1,0,0,0,64,334,1,0,0,0,66,348,1,0,0,0,68,350,
+        1,0,0,0,70,72,3,2,1,0,71,70,1,0,0,0,72,75,1,0,0,0,73,71,1,0,0,0,
+        73,74,1,0,0,0,74,76,1,0,0,0,75,73,1,0,0,0,76,77,5,0,0,1,77,1,1,0,
+        0,0,78,79,3,4,2,0,79,3,1,0,0,0,80,81,5,1,0,0,81,82,3,68,34,0,82,
+        83,3,6,3,0,83,84,3,24,12,0,84,5,1,0,0,0,85,87,3,8,4,0,86,85,1,0,
+        0,0,86,87,1,0,0,0,87,88,1,0,0,0,88,90,3,10,5,0,89,91,3,12,6,0,90,
+        89,1,0,0,0,90,91,1,0,0,0,91,7,1,0,0,0,92,93,5,12,0,0,93,98,3,66,
+        33,0,94,95,5,26,0,0,95,97,3,66,33,0,96,94,1,0,0,0,97,100,1,0,0,0,
+        98,96,1,0,0,0,98,99,1,0,0,0,99,102,1,0,0,0,100,98,1,0,0,0,101,103,
+        5,26,0,0,102,101,1,0,0,0,102,103,1,0,0,0,103,104,1,0,0,0,104,105,
+        5,13,0,0,105,9,1,0,0,0,106,118,5,16,0,0,107,112,3,14,7,0,108,109,
+        5,26,0,0,109,111,3,14,7,0,110,108,1,0,0,0,111,114,1,0,0,0,112,110,
+        1,0,0,0,112,113,1,0,0,0,113,116,1,0,0,0,114,112,1,0,0,0,115,117,
+        5,26,0,0,116,115,1,0,0,0,116,117,1,0,0,0,117,119,1,0,0,0,118,107,
+        1,0,0,0,118,119,1,0,0,0,119,120,1,0,0,0,120,121,5,17,0,0,121,11,
+        1,0,0,0,122,123,3,62,31,0,123,13,1,0,0,0,124,127,3,68,34,0,125,126,
+        5,27,0,0,126,128,3,62,31,0,127,125,1,0,0,0,127,128,1,0,0,0,128,15,
+        1,0,0,0,129,133,3,18,9,0,130,133,3,20,10,0,131,133,3,22,11,0,132,
+        129,1,0,0,0,132,130,1,0,0,0,132,131,1,0,0,0,133,17,1,0,0,0,134,135,
+        5,2,0,0,135,136,3,26,13,0,136,137,5,20,0,0,137,19,1,0,0,0,138,139,
+        3,26,13,0,139,140,5,20,0,0,140,21,1,0,0,0,141,142,5,20,0,0,142,23,
+        1,0,0,0,143,147,5,14,0,0,144,146,3,16,8,0,145,144,1,0,0,0,146,149,
+        1,0,0,0,147,145,1,0,0,0,147,148,1,0,0,0,148,150,1,0,0,0,149,147,
+        1,0,0,0,150,153,5,15,0,0,151,153,3,16,8,0,152,143,1,0,0,0,152,151,
+        1,0,0,0,153,25,1,0,0,0,154,155,3,28,14,0,155,27,1,0,0,0,156,161,
+        3,30,15,0,157,158,5,5,0,0,158,160,3,30,15,0,159,157,1,0,0,0,160,
+        163,1,0,0,0,161,159,1,0,0,0,161,162,1,0,0,0,162,29,1,0,0,0,163,161,
+        1,0,0,0,164,169,3,32,16,0,165,166,5,4,0,0,166,168,3,32,16,0,167,
+        165,1,0,0,0,168,171,1,0,0,0,169,167,1,0,0,0,169,170,1,0,0,0,170,
+        31,1,0,0,0,171,169,1,0,0,0,172,173,5,3,0,0,173,176,3,32,16,0,174,
+        176,3,34,17,0,175,172,1,0,0,0,175,174,1,0,0,0,176,33,1,0,0,0,177,
+        181,3,38,19,0,178,179,3,36,18,0,179,180,3,38,19,0,180,182,1,0,0,
+        0,181,178,1,0,0,0,181,182,1,0,0,0,182,35,1,0,0,0,183,184,7,0,0,0,
+        184,37,1,0,0,0,185,191,3,42,21,0,186,187,3,40,20,0,187,188,3,42,
+        21,0,188,190,1,0,0,0,189,186,1,0,0,0,190,193,1,0,0,0,191,189,1,0,
+        0,0,191,192,1,0,0,0,192,39,1,0,0,0,193,191,1,0,0,0,194,195,7,1,0,
+        0,195,41,1,0,0,0,196,202,3,46,23,0,197,198,3,44,22,0,198,199,3,46,
+        23,0,199,201,1,0,0,0,200,197,1,0,0,0,201,204,1,0,0,0,202,200,1,0,
+        0,0,202,203,1,0,0,0,203,43,1,0,0,0,204,202,1,0,0,0,205,206,7,2,0,
+        0,206,45,1,0,0,0,207,208,5,22,0,0,208,211,3,46,23,0,209,211,3,50,
+        25,0,210,207,1,0,0,0,210,209,1,0,0,0,211,47,1,0,0,0,212,224,5,16,
+        0,0,213,218,3,26,13,0,214,215,5,26,0,0,215,217,3,26,13,0,216,214,
+        1,0,0,0,217,220,1,0,0,0,218,216,1,0,0,0,218,219,1,0,0,0,219,222,
+        1,0,0,0,220,218,1,0,0,0,221,223,5,26,0,0,222,221,1,0,0,0,222,223,
+        1,0,0,0,223,225,1,0,0,0,224,213,1,0,0,0,224,225,1,0,0,0,225,226,
+        1,0,0,0,226,227,5,17,0,0,227,49,1,0,0,0,228,229,6,25,-1,0,229,230,
+        3,52,26,0,230,252,1,0,0,0,231,232,10,6,0,0,232,233,5,18,0,0,233,
+        234,3,26,13,0,234,235,5,19,0,0,235,251,1,0,0,0,236,237,10,5,0,0,
+        237,238,5,25,0,0,238,251,5,32,0,0,239,240,10,4,0,0,240,241,5,6,0,
+        0,241,251,3,62,31,0,242,243,10,3,0,0,243,244,5,25,0,0,244,251,3,
+        68,34,0,245,247,10,2,0,0,246,248,3,64,32,0,247,246,1,0,0,0,247,248,
+        1,0,0,0,248,249,1,0,0,0,249,251,3,48,24,0,250,231,1,0,0,0,250,236,
+        1,0,0,0,250,239,1,0,0,0,250,242,1,0,0,0,250,245,1,0,0,0,251,254,
+        1,0,0,0,252,250,1,0,0,0,252,253,1,0,0,0,253,51,1,0,0,0,254,252,1,
+        0,0,0,255,265,3,58,29,0,256,265,3,60,30,0,257,265,3,56,28,0,258,
+        265,3,68,34,0,259,265,3,54,27,0,260,261,5,16,0,0,261,262,3,26,13,
+        0,262,263,5,17,0,0,263,265,1,0,0,0,264,255,1,0,0,0,264,256,1,0,0,
+        0,264,257,1,0,0,0,264,258,1,0,0,0,264,259,1,0,0,0,264,260,1,0,0,
+        0,265,53,1,0,0,0,266,267,5,7,0,0,267,269,3,26,13,0,268,270,3,64,
+        32,0,269,268,1,0,0,0,269,270,1,0,0,0,270,271,1,0,0,0,271,272,3,48,
+        24,0,272,55,1,0,0,0,273,274,7,3,0,0,274,57,1,0,0,0,275,287,5,18,
+        0,0,276,281,3,26,13,0,277,278,5,26,0,0,278,280,3,26,13,0,279,277,
+        1,0,0,0,280,283,1,0,0,0,281,279,1,0,0,0,281,282,1,0,0,0,282,285,
+        1,0,0,0,283,281,1,0,0,0,284,286,5,26,0,0,285,284,1,0,0,0,285,286,
+        1,0,0,0,286,288,1,0,0,0,287,276,1,0,0,0,287,288,1,0,0,0,288,289,
+        1,0,0,0,289,290,5,19,0,0,290,59,1,0,0,0,291,305,5,16,0,0,292,293,
+        3,26,13,0,293,294,5,26,0,0,294,306,1,0,0,0,295,298,3,26,13,0,296,
+        297,5,26,0,0,297,299,3,26,13,0,298,296,1,0,0,0,299,300,1,0,0,0,300,
+        298,1,0,0,0,300,301,1,0,0,0,301,303,1,0,0,0,302,304,5,26,0,0,303,
+        302,1,0,0,0,303,304,1,0,0,0,304,306,1,0,0,0,305,292,1,0,0,0,305,
+        295,1,0,0,0,305,306,1,0,0,0,306,307,1,0,0,0,307,308,5,17,0,0,308,
+        61,1,0,0,0,309,321,5,16,0,0,310,315,3,62,31,0,311,312,5,26,0,0,312,
+        314,3,62,31,0,313,311,1,0,0,0,314,317,1,0,0,0,315,313,1,0,0,0,315,
+        316,1,0,0,0,316,319,1,0,0,0,317,315,1,0,0,0,318,320,5,26,0,0,319,
+        318,1,0,0,0,319,320,1,0,0,0,320,322,1,0,0,0,321,310,1,0,0,0,321,
+        322,1,0,0,0,322,323,1,0,0,0,323,333,5,17,0,0,324,325,5,16,0,0,325,
+        326,3,62,31,0,326,327,5,17,0,0,327,333,1,0,0,0,328,330,3,68,34,0,
+        329,331,3,64,32,0,330,329,1,0,0,0,330,331,1,0,0,0,331,333,1,0,0,
+        0,332,309,1,0,0,0,332,324,1,0,0,0,332,328,1,0,0,0,333,63,1,0,0,0,
+        334,335,5,12,0,0,335,340,3,62,31,0,336,337,5,26,0,0,337,339,3,62,
+        31,0,338,336,1,0,0,0,339,342,1,0,0,0,340,338,1,0,0,0,340,341,1,0,
+        0,0,341,344,1,0,0,0,342,340,1,0,0,0,343,345,5,26,0,0,344,343,1,0,
+        0,0,344,345,1,0,0,0,345,346,1,0,0,0,346,347,5,13,0,0,347,65,1,0,
+        0,0,348,349,3,68,34,0,349,67,1,0,0,0,350,351,7,4,0,0,351,69,1,0,
+        0,0,40,73,86,90,98,102,112,116,118,127,132,147,152,161,169,175,181,
+        191,202,210,218,222,224,247,250,252,264,269,281,285,287,300,303,
+        305,315,319,321,330,332,340,344
     ];
 
     private static __ATN: antlr.ATN;
@@ -1455,8 +1995,8 @@ export class FuncContext extends antlr.ParserRuleContext {
     public ident(): IdentContext {
         return this.getRuleContext(0, IdentContext)!;
     }
-    public paramslist(): ParamslistContext {
-        return this.getRuleContext(0, ParamslistContext)!;
+    public signature(): SignatureContext {
+        return this.getRuleContext(0, SignatureContext)!;
     }
     public block(): BlockContext {
         return this.getRuleContext(0, BlockContext)!;
@@ -1484,6 +2024,93 @@ export class FuncContext extends antlr.ParserRuleContext {
 }
 
 
+export class SignatureContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public paramslist(): ParamslistContext {
+        return this.getRuleContext(0, ParamslistContext)!;
+    }
+    public genericDef(): GenericDefContext | null {
+        return this.getRuleContext(0, GenericDefContext);
+    }
+    public returnSig(): ReturnSigContext | null {
+        return this.getRuleContext(0, ReturnSigContext);
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_signature;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterSignature) {
+             listener.enterSignature(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitSignature) {
+             listener.exitSignature(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitSignature) {
+            return visitor.visitSignature(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class GenericDefContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public LANGLE(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.LANGLE, 0)!;
+    }
+    public RANGLE(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.RANGLE, 0)!;
+    }
+    public typeParam(): TypeParamContext[];
+    public typeParam(i: number): TypeParamContext | null;
+    public typeParam(i?: number): TypeParamContext[] | TypeParamContext | null {
+        if (i === undefined) {
+            return this.getRuleContexts(TypeParamContext);
+        }
+
+        return this.getRuleContext(i, TypeParamContext);
+    }
+    public COMMA(): antlr.TerminalNode[];
+    public COMMA(i: number): antlr.TerminalNode | null;
+    public COMMA(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
+    	if (i === undefined) {
+    		return this.getTokens(DFOAParser.COMMA);
+    	} else {
+    		return this.getToken(DFOAParser.COMMA, i);
+    	}
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_genericDef;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterGenericDef) {
+             listener.enterGenericDef(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitGenericDef) {
+             listener.exitGenericDef(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitGenericDef) {
+            return visitor.visitGenericDef(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
 export class ParamslistContext extends antlr.ParserRuleContext {
     public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
         super(parent, invokingState);
@@ -1493,6 +2120,24 @@ export class ParamslistContext extends antlr.ParserRuleContext {
     }
     public RPAREN(): antlr.TerminalNode {
         return this.getToken(DFOAParser.RPAREN, 0)!;
+    }
+    public param(): ParamContext[];
+    public param(i: number): ParamContext | null;
+    public param(i?: number): ParamContext[] | ParamContext | null {
+        if (i === undefined) {
+            return this.getRuleContexts(ParamContext);
+        }
+
+        return this.getRuleContext(i, ParamContext);
+    }
+    public COMMA(): antlr.TerminalNode[];
+    public COMMA(i: number): antlr.TerminalNode | null;
+    public COMMA(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
+    	if (i === undefined) {
+    		return this.getTokens(DFOAParser.COMMA);
+    	} else {
+    		return this.getToken(DFOAParser.COMMA, i);
+    	}
     }
     public override get ruleIndex(): number {
         return DFOAParser.RULE_paramslist;
@@ -1510,6 +2155,72 @@ export class ParamslistContext extends antlr.ParserRuleContext {
     public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
         if (visitor.visitParamslist) {
             return visitor.visitParamslist(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class ReturnSigContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public type(): TypeContext {
+        return this.getRuleContext(0, TypeContext)!;
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_returnSig;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterReturnSig) {
+             listener.enterReturnSig(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitReturnSig) {
+             listener.exitReturnSig(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitReturnSig) {
+            return visitor.visitReturnSig(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class ParamContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public ident(): IdentContext {
+        return this.getRuleContext(0, IdentContext)!;
+    }
+    public COLON(): antlr.TerminalNode | null {
+        return this.getToken(DFOAParser.COLON, 0);
+    }
+    public type(): TypeContext | null {
+        return this.getRuleContext(0, TypeContext);
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_param;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterParam) {
+             listener.enterParam(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitParam) {
+             listener.exitParam(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitParam) {
+            return visitor.visitParam(this);
         } else {
             return visitor.visitChildren(this);
         }
@@ -1863,14 +2574,8 @@ export class ComparisonContext extends antlr.ParserRuleContext {
 
         return this.getRuleContext(i, AddSubContext);
     }
-    public compOp(): CompOpContext[];
-    public compOp(i: number): CompOpContext | null;
-    public compOp(i?: number): CompOpContext[] | CompOpContext | null {
-        if (i === undefined) {
-            return this.getRuleContexts(CompOpContext);
-        }
-
-        return this.getRuleContext(i, CompOpContext);
+    public compOp(): CompOpContext | null {
+        return this.getRuleContext(0, CompOpContext);
     }
     public override get ruleIndex(): number {
         return DFOAParser.RULE_comparison;
@@ -2202,9 +2907,6 @@ export class AtomTrailContext extends TrailContext {
     public atom(): AtomContext {
         return this.getRuleContext(0, AtomContext)!;
     }
-    public funcInvoke(): FuncInvokeContext | null {
-        return this.getRuleContext(0, FuncInvokeContext);
-    }
     public override enterRule(listener: DFOAListener): void {
         if(listener.enterAtomTrail) {
              listener.enterAtomTrail(this);
@@ -2290,6 +2992,38 @@ export class TupleAccessContext extends TrailContext {
         }
     }
 }
+export class TypeAliasContext extends TrailContext {
+    public constructor(ctx: TrailContext) {
+        super(ctx.parent, ctx.invokingState);
+        super.copyFrom(ctx);
+    }
+    public trail(): TrailContext {
+        return this.getRuleContext(0, TrailContext)!;
+    }
+    public AS(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.AS, 0)!;
+    }
+    public type(): TypeContext {
+        return this.getRuleContext(0, TypeContext)!;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterTypeAlias) {
+             listener.enterTypeAlias(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitTypeAlias) {
+             listener.exitTypeAlias(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitTypeAlias) {
+            return visitor.visitTypeAlias(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
 export class AttributeContext extends TrailContext {
     public constructor(ctx: TrailContext) {
         super(ctx.parent, ctx.invokingState);
@@ -2303,9 +3037,6 @@ export class AttributeContext extends TrailContext {
     }
     public ident(): IdentContext {
         return this.getRuleContext(0, IdentContext)!;
-    }
-    public funcInvoke(): FuncInvokeContext | null {
-        return this.getRuleContext(0, FuncInvokeContext);
     }
     public override enterRule(listener: DFOAListener): void {
         if(listener.enterAttribute) {
@@ -2325,6 +3056,38 @@ export class AttributeContext extends TrailContext {
         }
     }
 }
+export class FuncCallTrailContext extends TrailContext {
+    public constructor(ctx: TrailContext) {
+        super(ctx.parent, ctx.invokingState);
+        super.copyFrom(ctx);
+    }
+    public trail(): TrailContext {
+        return this.getRuleContext(0, TrailContext)!;
+    }
+    public funcInvoke(): FuncInvokeContext {
+        return this.getRuleContext(0, FuncInvokeContext)!;
+    }
+    public generics(): GenericsContext | null {
+        return this.getRuleContext(0, GenericsContext);
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterFuncCallTrail) {
+             listener.enterFuncCallTrail(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitFuncCallTrail) {
+             listener.exitFuncCallTrail(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitFuncCallTrail) {
+            return visitor.visitFuncCallTrail(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
 
 
 export class AtomContext extends antlr.ParserRuleContext {
@@ -2339,6 +3102,12 @@ export class AtomContext extends antlr.ParserRuleContext {
     }
     public literal(): LiteralContext | null {
         return this.getRuleContext(0, LiteralContext);
+    }
+    public ident(): IdentContext | null {
+        return this.getRuleContext(0, IdentContext);
+    }
+    public newExpr(): NewExprContext | null {
+        return this.getRuleContext(0, NewExprContext);
     }
     public LPAREN(): antlr.TerminalNode | null {
         return this.getToken(DFOAParser.LPAREN, 0);
@@ -2365,6 +3134,45 @@ export class AtomContext extends antlr.ParserRuleContext {
     public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
         if (visitor.visitAtom) {
             return visitor.visitAtom(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class NewExprContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public NEW(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.NEW, 0)!;
+    }
+    public expr(): ExprContext {
+        return this.getRuleContext(0, ExprContext)!;
+    }
+    public funcInvoke(): FuncInvokeContext {
+        return this.getRuleContext(0, FuncInvokeContext)!;
+    }
+    public generics(): GenericsContext | null {
+        return this.getRuleContext(0, GenericsContext);
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_newExpr;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterNewExpr) {
+             listener.enterNewExpr(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitNewExpr) {
+             listener.exitNewExpr(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitNewExpr) {
+            return visitor.visitNewExpr(this);
         } else {
             return visitor.visitChildren(this);
         }
@@ -2506,6 +3314,208 @@ export class TupleContext extends antlr.ParserRuleContext {
     public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
         if (visitor.visitTuple) {
             return visitor.visitTuple(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class TypeContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_type;
+    }
+    public override copyFrom(ctx: TypeContext): void {
+        super.copyFrom(ctx);
+    }
+}
+export class TupleTypeContext extends TypeContext {
+    public constructor(ctx: TypeContext) {
+        super(ctx.parent, ctx.invokingState);
+        super.copyFrom(ctx);
+    }
+    public LPAREN(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.LPAREN, 0)!;
+    }
+    public RPAREN(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.RPAREN, 0)!;
+    }
+    public type_(): TypeContext[];
+    public type_(i: number): TypeContext | null;
+    public type_(i?: number): TypeContext[] | TypeContext | null {
+        if (i === undefined) {
+            return this.getRuleContexts(TypeContext);
+        }
+
+        return this.getRuleContext(i, TypeContext);
+    }
+    public COMMA(): antlr.TerminalNode[];
+    public COMMA(i: number): antlr.TerminalNode | null;
+    public COMMA(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
+    	if (i === undefined) {
+    		return this.getTokens(DFOAParser.COMMA);
+    	} else {
+    		return this.getToken(DFOAParser.COMMA, i);
+    	}
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterTupleType) {
+             listener.enterTupleType(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitTupleType) {
+             listener.exitTupleType(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitTupleType) {
+            return visitor.visitTupleType(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+export class GroupingTypeContext extends TypeContext {
+    public constructor(ctx: TypeContext) {
+        super(ctx.parent, ctx.invokingState);
+        super.copyFrom(ctx);
+    }
+    public LPAREN(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.LPAREN, 0)!;
+    }
+    public type(): TypeContext {
+        return this.getRuleContext(0, TypeContext)!;
+    }
+    public RPAREN(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.RPAREN, 0)!;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterGroupingType) {
+             listener.enterGroupingType(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitGroupingType) {
+             listener.exitGroupingType(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitGroupingType) {
+            return visitor.visitGroupingType(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+export class BasicTypeContext extends TypeContext {
+    public constructor(ctx: TypeContext) {
+        super(ctx.parent, ctx.invokingState);
+        super.copyFrom(ctx);
+    }
+    public ident(): IdentContext {
+        return this.getRuleContext(0, IdentContext)!;
+    }
+    public generics(): GenericsContext | null {
+        return this.getRuleContext(0, GenericsContext);
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterBasicType) {
+             listener.enterBasicType(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitBasicType) {
+             listener.exitBasicType(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitBasicType) {
+            return visitor.visitBasicType(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class GenericsContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public LANGLE(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.LANGLE, 0)!;
+    }
+    public RANGLE(): antlr.TerminalNode {
+        return this.getToken(DFOAParser.RANGLE, 0)!;
+    }
+    public type_(): TypeContext[];
+    public type_(i: number): TypeContext | null;
+    public type_(i?: number): TypeContext[] | TypeContext | null {
+        if (i === undefined) {
+            return this.getRuleContexts(TypeContext);
+        }
+
+        return this.getRuleContext(i, TypeContext);
+    }
+    public COMMA(): antlr.TerminalNode[];
+    public COMMA(i: number): antlr.TerminalNode | null;
+    public COMMA(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
+    	if (i === undefined) {
+    		return this.getTokens(DFOAParser.COMMA);
+    	} else {
+    		return this.getToken(DFOAParser.COMMA, i);
+    	}
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_generics;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterGenerics) {
+             listener.enterGenerics(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitGenerics) {
+             listener.exitGenerics(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitGenerics) {
+            return visitor.visitGenerics(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class TypeParamContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public ident(): IdentContext {
+        return this.getRuleContext(0, IdentContext)!;
+    }
+    public override get ruleIndex(): number {
+        return DFOAParser.RULE_typeParam;
+    }
+    public override enterRule(listener: DFOAListener): void {
+        if(listener.enterTypeParam) {
+             listener.enterTypeParam(this);
+        }
+    }
+    public override exitRule(listener: DFOAListener): void {
+        if(listener.exitTypeParam) {
+             listener.exitTypeParam(this);
+        }
+    }
+    public override accept<Result>(visitor: DFOAVisitor<Result>): Result | null {
+        if (visitor.visitTypeParam) {
+            return visitor.visitTypeParam(this);
         } else {
             return visitor.visitChildren(this);
         }

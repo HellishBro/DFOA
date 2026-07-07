@@ -5,7 +5,11 @@ import { ErrorNode, ParseTreeListener, ParserRuleContext, TerminalNode } from "a
 import { StartContext } from "./DFOAParser.js";
 import { TlStatementContext } from "./DFOAParser.js";
 import { FuncContext } from "./DFOAParser.js";
+import { SignatureContext } from "./DFOAParser.js";
+import { GenericDefContext } from "./DFOAParser.js";
 import { ParamslistContext } from "./DFOAParser.js";
+import { ReturnSigContext } from "./DFOAParser.js";
+import { ParamContext } from "./DFOAParser.js";
 import { StatementContext } from "./DFOAParser.js";
 import { PrintStatementContext } from "./DFOAParser.js";
 import { ExprStatementContext } from "./DFOAParser.js";
@@ -26,11 +30,19 @@ import { FuncInvokeContext } from "./DFOAParser.js";
 import { AtomTrailContext } from "./DFOAParser.js";
 import { SubscriptContext } from "./DFOAParser.js";
 import { TupleAccessContext } from "./DFOAParser.js";
+import { TypeAliasContext } from "./DFOAParser.js";
 import { AttributeContext } from "./DFOAParser.js";
+import { FuncCallTrailContext } from "./DFOAParser.js";
 import { AtomContext } from "./DFOAParser.js";
+import { NewExprContext } from "./DFOAParser.js";
 import { LiteralContext } from "./DFOAParser.js";
 import { ListContext } from "./DFOAParser.js";
 import { TupleContext } from "./DFOAParser.js";
+import { TupleTypeContext } from "./DFOAParser.js";
+import { GroupingTypeContext } from "./DFOAParser.js";
+import { BasicTypeContext } from "./DFOAParser.js";
+import { GenericsContext } from "./DFOAParser.js";
+import { TypeParamContext } from "./DFOAParser.js";
 import { IdentContext } from "./DFOAParser.js";
 
 
@@ -70,6 +82,26 @@ export class DFOAListener implements ParseTreeListener {
      */
     exitFunc?: (ctx: FuncContext) => void;
     /**
+     * Enter a parse tree produced by `DFOAParser.signature`.
+     * @param ctx the parse tree
+     */
+    enterSignature?: (ctx: SignatureContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.signature`.
+     * @param ctx the parse tree
+     */
+    exitSignature?: (ctx: SignatureContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.genericDef`.
+     * @param ctx the parse tree
+     */
+    enterGenericDef?: (ctx: GenericDefContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.genericDef`.
+     * @param ctx the parse tree
+     */
+    exitGenericDef?: (ctx: GenericDefContext) => void;
+    /**
      * Enter a parse tree produced by `DFOAParser.paramslist`.
      * @param ctx the parse tree
      */
@@ -79,6 +111,26 @@ export class DFOAListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitParamslist?: (ctx: ParamslistContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.returnSig`.
+     * @param ctx the parse tree
+     */
+    enterReturnSig?: (ctx: ReturnSigContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.returnSig`.
+     * @param ctx the parse tree
+     */
+    exitReturnSig?: (ctx: ReturnSigContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.param`.
+     * @param ctx the parse tree
+     */
+    enterParam?: (ctx: ParamContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.param`.
+     * @param ctx the parse tree
+     */
+    exitParam?: (ctx: ParamContext) => void;
     /**
      * Enter a parse tree produced by `DFOAParser.statement`.
      * @param ctx the parse tree
@@ -286,6 +338,18 @@ export class DFOAListener implements ParseTreeListener {
      */
     exitTupleAccess?: (ctx: TupleAccessContext) => void;
     /**
+     * Enter a parse tree produced by the `typeAlias`
+     * labeled alternative in `DFOAParser.trail`.
+     * @param ctx the parse tree
+     */
+    enterTypeAlias?: (ctx: TypeAliasContext) => void;
+    /**
+     * Exit a parse tree produced by the `typeAlias`
+     * labeled alternative in `DFOAParser.trail`.
+     * @param ctx the parse tree
+     */
+    exitTypeAlias?: (ctx: TypeAliasContext) => void;
+    /**
      * Enter a parse tree produced by the `attribute`
      * labeled alternative in `DFOAParser.trail`.
      * @param ctx the parse tree
@@ -298,6 +362,18 @@ export class DFOAListener implements ParseTreeListener {
      */
     exitAttribute?: (ctx: AttributeContext) => void;
     /**
+     * Enter a parse tree produced by the `funcCallTrail`
+     * labeled alternative in `DFOAParser.trail`.
+     * @param ctx the parse tree
+     */
+    enterFuncCallTrail?: (ctx: FuncCallTrailContext) => void;
+    /**
+     * Exit a parse tree produced by the `funcCallTrail`
+     * labeled alternative in `DFOAParser.trail`.
+     * @param ctx the parse tree
+     */
+    exitFuncCallTrail?: (ctx: FuncCallTrailContext) => void;
+    /**
      * Enter a parse tree produced by `DFOAParser.atom`.
      * @param ctx the parse tree
      */
@@ -307,6 +383,16 @@ export class DFOAListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitAtom?: (ctx: AtomContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.newExpr`.
+     * @param ctx the parse tree
+     */
+    enterNewExpr?: (ctx: NewExprContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.newExpr`.
+     * @param ctx the parse tree
+     */
+    exitNewExpr?: (ctx: NewExprContext) => void;
     /**
      * Enter a parse tree produced by `DFOAParser.literal`.
      * @param ctx the parse tree
@@ -337,6 +423,62 @@ export class DFOAListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitTuple?: (ctx: TupleContext) => void;
+    /**
+     * Enter a parse tree produced by the `tupleType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     */
+    enterTupleType?: (ctx: TupleTypeContext) => void;
+    /**
+     * Exit a parse tree produced by the `tupleType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     */
+    exitTupleType?: (ctx: TupleTypeContext) => void;
+    /**
+     * Enter a parse tree produced by the `groupingType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     */
+    enterGroupingType?: (ctx: GroupingTypeContext) => void;
+    /**
+     * Exit a parse tree produced by the `groupingType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     */
+    exitGroupingType?: (ctx: GroupingTypeContext) => void;
+    /**
+     * Enter a parse tree produced by the `basicType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     */
+    enterBasicType?: (ctx: BasicTypeContext) => void;
+    /**
+     * Exit a parse tree produced by the `basicType`
+     * labeled alternative in `DFOAParser.type`.
+     * @param ctx the parse tree
+     */
+    exitBasicType?: (ctx: BasicTypeContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.generics`.
+     * @param ctx the parse tree
+     */
+    enterGenerics?: (ctx: GenericsContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.generics`.
+     * @param ctx the parse tree
+     */
+    exitGenerics?: (ctx: GenericsContext) => void;
+    /**
+     * Enter a parse tree produced by `DFOAParser.typeParam`.
+     * @param ctx the parse tree
+     */
+    enterTypeParam?: (ctx: TypeParamContext) => void;
+    /**
+     * Exit a parse tree produced by `DFOAParser.typeParam`.
+     * @param ctx the parse tree
+     */
+    exitTypeParam?: (ctx: TypeParamContext) => void;
     /**
      * Enter a parse tree produced by `DFOAParser.ident`.
      * @param ctx the parse tree
