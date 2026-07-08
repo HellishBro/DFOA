@@ -2,21 +2,29 @@ import { BasicType, Type } from "./base.js";
 
 export const IntegerType = new class IntegerType extends Type {
     constructor() {
-        super(BasicType.Integer, {});
+        super(BasicType.Integer);
     }
     describe(): string { return "int"; }
+    subtypes(other: Type): boolean {
+        if (other.type == BasicType.Float) return true;
+        return super.subtypes(other);
+    }
 };
 
 export const FloatType = new class FloatType extends Type {
     constructor() {
-        super(BasicType.Float, {});
+        super(BasicType.Float);
     }
     describe(): string { return "float"; }
 };
 
 export const BooleanType = new class BooleanType extends Type {
     constructor() {
-        super(BasicType.Boolean, {});
+        super(BasicType.Boolean);
     }
     describe(): string { return "boolean"; }
+    subtypes(other: Type): boolean {
+        if (other.type == BasicType.Integer) return true;
+        return super.subtypes(other);
+    }
 };

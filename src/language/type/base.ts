@@ -13,35 +13,32 @@ export enum BasicType {
     Error
 }
 
-export class Type {
-    constructor(public type: BasicType, public fields: { [name: string]: Type }) {}
-    describe(): string | undefined { return undefined; };
+export const PrimitiveTypes = [
+    BasicType.String,
+    BasicType.Text,
+    BasicType.Integer,
+    BasicType.Float,
+    BasicType.Boolean
+];
+
+export abstract class Type {
+    type: BasicType;
+    constructor(type: BasicType) { this.type = type; }
+
+    abstract describe(): string | undefined;
     toString(): string { return this.describe() ?? `$type<${BasicType[this.type].toLowerCase()}>`; }
 
-    peq(other: Type): boolean {
-        if ([BasicType.String, BasicType.Text, BasicType.Integer, BasicType.Float, BasicType.Boolean, BasicType.Any].includes(other.type)) {
-            return this.type == other.type;
-        }
+    subtypes(other: Type): boolean {
+        if (this.type == other.type && PrimitiveTypes.includes(this.type)) return true;
+        if (other.type == BasicType.Any) return true;
         return false;
     }
 
-    list_like(): boolean {
-        return this.type == BasicType.List || this.type == BasicType.Tuple;
-    }
-
-    string_like(): boolean {
-        return this.type == BasicType.String || this.type == BasicType.Text;
-    }
-
-    number_like(): boolean {
-        return this.type == BasicType.Integer || this.type == BasicType.Float;
-    }
-
-    is_unchecked(): boolean {
-        return this.type == BasicType.Unchecked;
-    }
-
     workable(): boolean {
-        return this.type != BasicType.Error && this.type != BasicType.Function;
+        return this.type != BasicType.Error && this.type != BasicType.Function && this.type != BasicType.Unchecked;
+    }
+
+    equals(other: Type): boolean {
+        return this.type == other.type && PrimitiveTypes.includes(this.type);
     }
 }
