@@ -4,8 +4,9 @@
   "description": "DF.oa is a sibling language of Orchestra that is used to compile exclusively to DiamondFire templates.",
   "scripts": {
     "dfoa": "tsx src/cli/index.ts",
-    "build": "tsc",
-    "gen-grammar": "antlr-ng -o src/language/parser/dfoa -Dlanguage=TypeScript grammar/DFOALexer.g4 && antlr-ng -o src/language/parser/dfoa --lib src/language/parser/dfoa -l -v -Dlanguage=TypeScript grammar/DFOA.g4"
+    "build": "pnpm gen-grammar && pnpm gen-unicode && tsc",
+    "gen-grammar": "antlr-ng -o src/language/parser/dfoa -Dlanguage=TypeScript grammar/DFOALexer.g4 && antlr-ng -o src/language/parser/dfoa --lib src/language/parser/dfoa -l -v -Dlanguage=TypeScript grammar/DFOA.g4",
+    "gen-unicode": "tsx src/cli/tools/generate_unicode_data.ts"
   },
   "license": "MIT",
   "devEngines": {

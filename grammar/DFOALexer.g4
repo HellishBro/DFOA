@@ -47,7 +47,11 @@ COMMA: ',';
 COLON: ':';
 EQUALS: '=';
 
-fragment UNICODE_ESC_SEQ: 'u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F];
+fragment HEX_DIGIT: [0-9a-fA-F];
+fragment UNICODE_NAME_ESC: '{' [A-Z_]+ '}';
+fragment UNICODE_ESC_SEQ: 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+    | 'N' '{' .+? '}'
+    | 'x' HEX_DIGIT HEX_DIGIT;
 fragment STRLIKE_ESC_SEQ: '\\' (UNICODE_ESC_SEQ | .);
 fragment COMPLEX_IDENT_PART: ~[\\\r\n`];
 SIMPLE_IDENT: [a-zA-Z_$][a-zA-Z0-9_]*;

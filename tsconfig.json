@@ -41,7 +41,8 @@
     "skipLibCheck": true,
     "paths": {
       "lang/*": ["./src/language/*"],
-      "struct/*": ["./src/struct/*"]
+      "struct/*": ["./src/struct/*"],
+      "data/*": ["./src/data/*"]
     }
   },
   "include": [
