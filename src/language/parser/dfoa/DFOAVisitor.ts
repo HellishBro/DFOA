@@ -11,10 +11,20 @@ import { ParamslistContext } from "./DFOAParser.js";
 import { ReturnSigContext } from "./DFOAParser.js";
 import { ParamContext } from "./DFOAParser.js";
 import { StatementContext } from "./DFOAParser.js";
-import { PrintStatementContext } from "./DFOAParser.js";
-import { ExprStatementContext } from "./DFOAParser.js";
+import { IfContext } from "./DFOAParser.js";
+import { ForContext } from "./DFOAParser.js";
+import { WhileContext } from "./DFOAParser.js";
+import { BreakContext } from "./DFOAParser.js";
+import { ContinueContext } from "./DFOAParser.js";
+import { LetContext } from "./DFOAParser.js";
+import { AssignContext } from "./DFOAParser.js";
+import { ReturnContext } from "./DFOAParser.js";
+import { PrintContext } from "./DFOAParser.js";
+import { ExprStmtContext } from "./DFOAParser.js";
 import { SemiContext } from "./DFOAParser.js";
 import { BlockContext } from "./DFOAParser.js";
+import { VarDeclListContext } from "./DFOAParser.js";
+import { VarDeclContext } from "./DFOAParser.js";
 import { ExprContext } from "./DFOAParser.js";
 import { OrContext } from "./DFOAParser.js";
 import { AndContext } from "./DFOAParser.js";
@@ -35,9 +45,11 @@ import { AttributeContext } from "./DFOAParser.js";
 import { FuncCallTrailContext } from "./DFOAParser.js";
 import { AtomContext } from "./DFOAParser.js";
 import { NewExprContext } from "./DFOAParser.js";
+import { VariableContext } from "./DFOAParser.js";
 import { LiteralContext } from "./DFOAParser.js";
 import { ListContext } from "./DFOAParser.js";
 import { TupleContext } from "./DFOAParser.js";
+import { LifetimeContext } from "./DFOAParser.js";
 import { TupleTypeContext } from "./DFOAParser.js";
 import { GroupingTypeContext } from "./DFOAParser.js";
 import { BasicTypeContext } from "./DFOAParser.js";
@@ -109,17 +121,65 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitStatement?: (ctx: StatementContext) => Result;
     /**
-     * Visit a parse tree produced by `DFOAParser.printStatement`.
+     * Visit a parse tree produced by `DFOAParser.if`.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    visitPrintStatement?: (ctx: PrintStatementContext) => Result;
+    visitIf?: (ctx: IfContext) => Result;
     /**
-     * Visit a parse tree produced by `DFOAParser.exprStatement`.
+     * Visit a parse tree produced by `DFOAParser.for`.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    visitExprStatement?: (ctx: ExprStatementContext) => Result;
+    visitFor?: (ctx: ForContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.while`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitWhile?: (ctx: WhileContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.break`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitBreak?: (ctx: BreakContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.continue`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitContinue?: (ctx: ContinueContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.let`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitLet?: (ctx: LetContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.assign`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitAssign?: (ctx: AssignContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.return`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitReturn?: (ctx: ReturnContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.print`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitPrint?: (ctx: PrintContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.exprStmt`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitExprStmt?: (ctx: ExprStmtContext) => Result;
     /**
      * Visit a parse tree produced by `DFOAParser.semi`.
      * @param ctx the parse tree
@@ -132,6 +192,18 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitBlock?: (ctx: BlockContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.varDeclList`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitVarDeclList?: (ctx: VarDeclListContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.varDecl`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitVarDecl?: (ctx: VarDeclContext) => Result;
     /**
      * Visit a parse tree produced by `DFOAParser.expr`.
      * @param ctx the parse tree
@@ -259,6 +331,12 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitNewExpr?: (ctx: NewExprContext) => Result;
     /**
+     * Visit a parse tree produced by `DFOAParser.variable`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitVariable?: (ctx: VariableContext) => Result;
+    /**
      * Visit a parse tree produced by `DFOAParser.literal`.
      * @param ctx the parse tree
      * @return the visitor result
@@ -276,6 +354,12 @@ export class DFOAVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitTuple?: (ctx: TupleContext) => Result;
+    /**
+     * Visit a parse tree produced by `DFOAParser.lifetime`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitLifetime?: (ctx: LifetimeContext) => Result;
     /**
      * Visit a parse tree produced by the `tupleType`
      * labeled alternative in `DFOAParser.type`.

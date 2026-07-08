@@ -12,6 +12,6 @@ signature: genericDef? paramslist returnSig?;
 
 genericDef: LANGLE (typeParam (COMMA typeParam)* COMMA?) RANGLE;
 paramslist: LPAREN (param (COMMA param)* COMMA?)? RPAREN;
-returnSig: type;
+returnSig: COLON type;
 
 param: ident (COLON type)?;

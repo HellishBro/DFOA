@@ -1,6 +1,6 @@
-import { As, Attribute, BinaryOperators, BinOp, Expression, FunctionCall, List, LiteralFloat, LiteralInteger, LiteralString, LiteralText, New, Operator, Subscript, Tuple, TupleSubscript, UnaryOperators, UnOp, Variable } from "lang/ast/expressions.js";
+import { As, Attribute, BinaryOperators, BinOp, Expression, FunctionCall, List, LiteralBoolean, LiteralFloat, LiteralInteger, LiteralString, LiteralText, New, Operator, Subscript, Tuple, TupleSubscript, UnaryOperators, UnOp, Variable, VariableLifetime, VariableLifetimeEnum } from "lang/ast/expressions.js";
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
-import { AddSubContext, AddSubOpContext, AndContext, AtomContext, AtomTrailContext, AttributeContext, ComparisonContext, CompOpContext, ExprContext, FuncCallTrailContext, FuncInvokeContext, IdentContext, ListContext, LiteralContext, MultDivContext, MultDivOpContext, NewExprContext, NotContext, OrContext, SubscriptContext, TrailContext, TupleAccessContext, TupleContext, TypeAliasContext, UnopContext } from "../dfoa/DFOAParser.js";
+import { AddSubContext, AddSubOpContext, AndContext, AtomContext, AtomTrailContext, AttributeContext, ComparisonContext, ExprContext, FuncCallTrailContext, ListContext, LiteralContext, MultDivContext, MultDivOpContext, NewExprContext, NotContext, OrContext, SubscriptContext, TrailContext, TupleAccessContext, TupleContext, TypeAliasContext, UnopContext, VariableContext } from "../dfoa/DFOAParser.js";
 import unescape from "lang/utils/unescape.js";
 import { ParseTree } from "antlr4ng";
 import { spanning } from "lang/utils/span.js";
@@ -202,8 +202,8 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
             return this.visitTuple(ctx.tuple()!);
         } else if (ctx.expr()) {
             return this.visitExpr(ctx.expr()!);
-        } else if (ctx.ident()) {
-            return this.visitIdent(ctx.ident()!);
+        } else if (ctx.variable()) {
+            return this.visitVariable(ctx.variable()!);
         } else if (ctx.newExpr()) {
             return this.visitNewExpr(ctx.newExpr()!);
         }
@@ -219,6 +219,10 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
             return new LiteralInteger(parseInt(ctx.INTEGER()!.getText()), this.get_span(ctx.INTEGER()!));
         } else if (ctx.FLOAT()) {
             return new LiteralFloat(parseFloat(ctx.FLOAT()!.getText()), this.get_span(ctx.FLOAT()!));
+        } else if (ctx.TRUE()) {
+            return new LiteralBoolean(true, this.get_span(ctx.TRUE()!));
+        } else if (ctx.FALSE()) {
+            return new LiteralBoolean(false, this.get_span(ctx.FALSE()!));
         }
         unreachable();
     }
@@ -231,15 +235,26 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
         return new Tuple(ctx.expr().map(e => this.visitExpr(e)), UncheckedType, this.get_span(ctx));
     }
 
-    visitIdent: (ctx: IdentContext) => Expression = ctx => {
-        return new Variable(this.visit_ident(ctx), UncheckedType, this.get_span(ctx))
-    }
-
     visitNewExpr: (ctx: NewExprContext) => Expression = ctx => {
         return new New(
             this.visitExpr(ctx.expr()),
             ctx.funcInvoke().expr().map(e => this.visitExpr(e)),
             this.orch.type.visit_generics(ctx.generics()),
+            UncheckedType,
+            this.get_span(ctx)
+        )
+    }
+
+    visitVariable: (ctx: VariableContext) => Expression = ctx => {
+        return new Variable(
+            this.visit_ident(ctx.ident()),
+            ctx.lifetime() == null ? null : new VariableLifetime(
+                ctx.lifetime()!.GLOBAL() ? VariableLifetimeEnum.GLOBAL :
+                ctx.lifetime()!.PERSISTENT() ? VariableLifetimeEnum.PERSISTENT :
+                ctx.lifetime()!.LOCAL() ? VariableLifetimeEnum.LOCAL :
+                ctx.lifetime()!.LINE() ? VariableLifetimeEnum.LINE : unreachable(),
+                this.get_span(ctx.lifetime()!)
+            ),
             UncheckedType,
             this.get_span(ctx)
         )

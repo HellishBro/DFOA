@@ -27,10 +27,14 @@ trail: trail LBRACK expr RBRACK #subscript
     | atom #atomTrail
     ;
 
-atom: list | tuple | literal | ident | newExpr | LPAREN expr RPAREN;
+atom: list | tuple | literal | variable | newExpr | LPAREN expr RPAREN;
 
 newExpr: NEW expr generics? funcInvoke;
 
-literal: INTEGER | FLOAT | STRING | TEXT;
+variable: lifetime? ident;
+
+literal: INTEGER | FLOAT | STRING | TEXT | TRUE | FALSE;
 list: LBRACK (expr (COMMA expr)* COMMA?)? RBRACK;
 tuple: LPAREN (expr COMMA | expr (COMMA expr)+ COMMA?)? RPAREN;
+
+lifetime: GLOBAL | PERSISTENT | LOCAL | LINE;

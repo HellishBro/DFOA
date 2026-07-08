@@ -1,6 +1,6 @@
 import { Span } from "lang/utils/span.js";
 import { Identifier, Node } from "./ast.js";
-import { IntegerType, FloatType } from "lang/type/numerics.js";
+import { IntegerType, FloatType, BooleanType } from "lang/type/numerics.js";
 import { StringType, TextType } from "lang/type/strings.js";
 import { Type } from "lang/type/base.js";
 import { TypeNode } from "./types.js";
@@ -89,6 +89,10 @@ export class LiteralFloat extends Expression {
     constructor(public number: number, span: Span) { super(FloatType, span); }
 }
 
+export class LiteralBoolean extends Expression {
+    constructor(public value: boolean, span: Span) { super(BooleanType, span); }
+}
+
 
 export class List extends Expression {
     constructor(public items: Expression[], type: Type, span: Span) { super(type, span); }
@@ -98,6 +102,18 @@ export class Tuple extends Expression {
     constructor(public items: Expression[], type: Type, span: Span) { super(type, span); }
 }
 
+
+export enum VariableLifetimeEnum {
+    GLOBAL = "global",
+    PERSISTENT = "saved",
+    LOCAL = "local",
+    LINE = "line"
+}
+
+export class VariableLifetime extends Node {
+    constructor(public lifetime: VariableLifetimeEnum, span: Span) { super(span); }
+}
+
 export class Variable extends Expression {
-    constructor(public name: Identifier, type: Type, span: Span) { super(type, span); }
+    constructor(public name: Identifier, public lifetime: VariableLifetime | null, type: Type, span: Span) { super(type, span); }
 }

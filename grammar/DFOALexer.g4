@@ -7,6 +7,22 @@ AND: 'and';
 OR: 'or';
 AS: 'as';
 NEW: 'new';
+IF: 'if';
+ELSE: 'else';
+FOR: 'for';
+IN: 'in';
+WHILE: 'while';
+LET: 'let';
+RETURN: 'return';
+BREAK: 'break';
+CONTINUE: 'continue';
+TRUE: 'true';
+FALSE: 'false';
+
+GLOBAL: 'global';
+PERSISTENT: 'saved';
+LOCAL: 'local';
+LINE: 'line';
 
 EQEQ: '==';
 LE: '<=';
@@ -29,6 +45,7 @@ SLASH: '/';
 DOT: '.';
 COMMA: ',';
 COLON: ':';
+EQUALS: '=';
 
 fragment UNICODE_ESC_SEQ: 'u' [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F];
 fragment STRLIKE_ESC_SEQ: '\\' (UNICODE_ESC_SEQ | .);
