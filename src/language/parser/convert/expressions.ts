@@ -212,17 +212,23 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
 
     visitLiteral: (ctx: LiteralContext) => Expression = ctx => {
         if (ctx.STRING()) {
-            return new LiteralString(unescape(ctx.STRING()!.getText()), this.get_span(ctx.STRING()!));
+            return new LiteralString(
+                ctx.STRING()!.map(s => unescape(s.getText())).reduce((a, l) => a + l, ""),
+                this.get_span(ctx)
+            );
         } else if (ctx.TEXT()) {
-            return new LiteralText(unescape(ctx.TEXT()!.getText()), this.get_span(ctx.TEXT()!));
+            return new LiteralText(
+                ctx.TEXT()!.map(t => unescape(t.getText())).reduce((a, l) => a + l, ""),
+                this.get_span(ctx)
+            );
         } else if (ctx.INTEGER()) {
-            return new LiteralInteger(parseInt(ctx.INTEGER()!.getText()), this.get_span(ctx.INTEGER()!));
+            return new LiteralInteger(parseInt(ctx.INTEGER()!.getText()), this.get_span(ctx));
         } else if (ctx.FLOAT()) {
-            return new LiteralFloat(parseFloat(ctx.FLOAT()!.getText()), this.get_span(ctx.FLOAT()!));
+            return new LiteralFloat(parseFloat(ctx.FLOAT()!.getText()), this.get_span(ctx));
         } else if (ctx.TRUE()) {
-            return new LiteralBoolean(true, this.get_span(ctx.TRUE()!));
+            return new LiteralBoolean(true, this.get_span(ctx));
         } else if (ctx.FALSE()) {
-            return new LiteralBoolean(false, this.get_span(ctx.FALSE()!));
+            return new LiteralBoolean(false, this.get_span(ctx));
         }
         unreachable();
     }

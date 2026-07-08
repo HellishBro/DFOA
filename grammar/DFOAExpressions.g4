@@ -33,7 +33,7 @@ newExpr: NEW expr generics? funcInvoke;
 
 variable: lifetime? ident;
 
-literal: INTEGER | FLOAT | STRING | TEXT | TRUE | FALSE;
+literal: INTEGER | FLOAT | STRING+ | TEXT+ | TRUE | FALSE;
 list: LBRACK (expr (COMMA expr)* COMMA?)? RBRACK;
 tuple: LPAREN (expr COMMA | expr (COMMA expr)+ COMMA?)? RPAREN;
 
