@@ -5,20 +5,21 @@ import { Statement } from "lang/ast/statements.js";
 import { TopLevel } from "lang/ast/top_levels.js";
 import { Span } from "lang/utils/span.js";
 import { BlockContext, ExprContext, IdentContext, StatementContext, TlStatementContext, TypeContext } from "../dfoa/DFOAParser.js";
-import { Body, Identifier } from "lang/ast/ast.js";
+import { Body, Identifier, Node } from "lang/ast/ast.js";
 import unescape from "lang/utils/unescape.js";
 import { TypeNode } from "lang/ast/types.js";
 import TypeCSTASTConverter from "./type.js";
 import TopLevelCSTASTConverter from "./top_levels.js";
 import StatementCSTASTConverter from "./statements.js";
 import ExpressionCSTASTConverter from "./expressions.js";
+import { File } from "lang/table/table.js";
 
 export default interface Orchestrator {
     expression: ExpressionCSTASTConverter,
     statement: StatementCSTASTConverter,
     top_level: TopLevelCSTASTConverter,
     type: TypeCSTASTConverter,
-    file: string
+    file: File
 }
 
 export class DFOAVisitor<T> extends V<T> {
@@ -64,9 +65,12 @@ export class DFOAVisitor<T> extends V<T> {
         let interval = node.getSourceInterval();
         return {
             start: interval.start,
-            end: interval.stop,
-            file: this.orch.file
+            end: interval.stop
         }
+    }
+
+    span_of(node: Node): Span {
+        return this.orch.file.spans.get(node.id)!;
     }
 }
 

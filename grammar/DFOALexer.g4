@@ -1,4 +1,5 @@
 lexer grammar DFOALexer;
+channels { Comment, DocComment }
 
 FUNC: 'func';
 PRINT: 'print';
@@ -67,6 +68,7 @@ fragment INT_PART: [0-9]+;
 INTEGER: INT_PART;
 FLOAT: INT_PART '.' INT_PART?;
 
-WS: [ \t\r\n] -> channel(HIDDEN);
-COMMENT: '//' ~[\r\n]* -> channel(HIDDEN);
-MULT_LINE_COMMENT: '/*' .*? '*/' -> channel(HIDDEN);
+WS: [ \t\r\n] -> skip; // i really can't care less about whitespace
+COMMENT: '//' ~[\r\n]* -> channel(Comment); // might be useful for linting
+DOC_COMMENT: '/**' (. | DOC_COMMENT)*? '*/' -> channel(DocComment); 
+MULT_LINE_COMMENT: '/*' (. | MULT_LINE_COMMENT)*? '*/' -> channel(Comment);

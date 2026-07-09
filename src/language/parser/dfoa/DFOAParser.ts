@@ -62,7 +62,8 @@ export class DFOAParser extends antlr.Parser {
     public static readonly FLOAT = 49;
     public static readonly WS = 50;
     public static readonly COMMENT = 51;
-    public static readonly MULT_LINE_COMMENT = 52;
+    public static readonly DOC_COMMENT = 52;
+    public static readonly MULT_LINE_COMMENT = 53;
     public static readonly RULE_start = 0;
     public static readonly RULE_tlStatement = 1;
     public static readonly RULE_func = 2;
@@ -127,7 +128,7 @@ export class DFOAParser extends antlr.Parser {
         "GE", "NEQ", "LANGLE", "RANGLE", "LBRACE", "RBRACE", "LPAREN", "RPAREN", 
         "LBRACK", "RBRACK", "SEMI", "PLUS", "MINUS", "STAR", "SLASH", "DOT", 
         "COMMA", "COLON", "EQUALS", "SIMPLE_IDENT", "COMPLEX_IDENT", "STRING", 
-        "TEXT", "INTEGER", "FLOAT", "WS", "COMMENT", "MULT_LINE_COMMENT"
+        "TEXT", "INTEGER", "FLOAT", "WS", "COMMENT", "DOC_COMMENT", "MULT_LINE_COMMENT"
     ];
     public static readonly ruleNames = [
         "start", "tlStatement", "func", "signature", "genericDef", "paramslist", 
@@ -2365,7 +2366,7 @@ export class DFOAParser extends antlr.Parser {
     }
 
     public static readonly _serializedATN: number[] = [
-        4,1,52,467,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,53,467,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,

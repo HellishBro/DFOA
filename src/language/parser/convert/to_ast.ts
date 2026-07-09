@@ -5,17 +5,27 @@ import Orchestrator from "./orchestrator.js";
 import StatementCSTASTConverter from "./statements.js";
 import TopLevelCSTASTConverter from "./top_levels.js";
 import TypeCSTASTConverter from "./type.js";
+import { File } from "lang/table/table.js";
+import { switch_context } from "lang/ast/ast_file_context.js";
 
 export default class CSTASTConverter {
     orchestrator: Orchestrator;
+    file: File;
 
     constructor(file: string) {
+        this.file = new File(
+            file,
+            new Map(),
+            new Map()
+        );
+        switch_context(this.file);
+
         this.orchestrator = {
             expression: undefined!,
             statement: undefined!,
             top_level: undefined!,
             type: undefined!,
-            file
+            file: this.file
         } as Orchestrator;
         let expression_converter = new ExpressionCSTASTConverter(this.orchestrator);
         let statement_converter = new StatementCSTASTConverter(this.orchestrator);
@@ -30,12 +40,11 @@ export default class CSTASTConverter {
     start(module: StartContext): Module {
         let interval = module.getSourceInterval();
         return new Module(
-            this.orchestrator.file,
+            this.orchestrator.file.filename,
             module.tlStatement().map(s => this.orchestrator.top_level.visitTlStatement!(s)),
             {
                 start: interval.start,
-                end: interval.stop,
-                file: this.orchestrator.file
+                end: interval.stop
             }
         )
     }

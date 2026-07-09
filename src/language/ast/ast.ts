@@ -1,8 +1,14 @@
 import { Span } from "lang/utils/span.js";
 import { Statement } from "./statements.js";
+import { NodeID } from "lang/table/table.js";
+import { current_file_context } from "./ast_file_context.js";
 
 export abstract class Node {
-    constructor(public span: Span) {}
+    id: NodeID;
+
+    constructor(span: Span) {
+        this.id = current_file_context.register_node(this, span);
+    }
 }
 
 export class Body extends Node {

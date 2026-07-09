@@ -43,8 +43,10 @@ program.command("parse")
         let {cst, pprint, tokens} = gather_cst(fs.readFileSync(file).toString(), true, true);
         console.log("Tokens:", tokens!);
         console.log("CST:", pprint!);
-        let ast = new CSTASTConverter(file).start(cst);
+        let converter = new CSTASTConverter(file)
+        let ast = converter.start(cst);
         console.log("AST:", util.inspect(ast, false, null, true));
+        console.log("File:", util.inspect(converter.file, false, null, true));
     })
 
 program.parse();

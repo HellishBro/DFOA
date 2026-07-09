@@ -22,7 +22,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
                 new Operator(BinaryOperators.OR, this.get_span(next_sep!)),
                 right,
                 UncheckedType,
-                spanning(value.span, right.span)
+                spanning(this.span_of(value), this.span_of(right))
             );
         }
         return value;
@@ -39,7 +39,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
                 new Operator(BinaryOperators.AND, this.get_span(next_sep!)),
                 right,
                 UncheckedType,
-                spanning(value.span, right.span)
+                spanning(this.span_of(value), this.span_of(right))
             );
         }
         return value;
@@ -75,7 +75,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
                 new Operator(op, this.get_span(sep)),
                 right,
                 UncheckedType,
-                spanning(value.span, right.span)
+                spanning(this.span_of(value), this.span_of(right))
             );
         }
 
@@ -96,7 +96,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
                 new Operator(op, this.get_span(next_sep!)),
                 right,
                 UncheckedType,
-                spanning(value.span, right.span)
+                spanning(this.span_of(value), this.span_of(right))
             );
         }
         return value;
@@ -116,7 +116,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
                 new Operator(op, this.get_span(next_sep!)),
                 right,
                 UncheckedType,
-                spanning(value.span, right.span)
+                spanning(this.span_of(value), this.span_of(right))
             );
         }
         return value;
