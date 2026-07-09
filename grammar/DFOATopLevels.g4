@@ -6,7 +6,7 @@ options {
 
 tlStatement: func;
 
-func: FUNC ident signature block;
+func: DOC_COMMENT? FUNC ident signature block;
 
 signature: genericDef? paramslist returnSig?;
 

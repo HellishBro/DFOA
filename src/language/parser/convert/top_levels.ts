@@ -2,8 +2,17 @@ import { Func, Parameter, Signature, TopLevel, TypeVar } from "lang/ast/top_leve
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
 import { FuncContext, GenericDefContext, ParamContext, ParamslistContext, ReturnSigContext, SignatureContext, TlStatementContext, TypeParamContext } from "../dfoa/DFOAParser.js";
 import { TypeNode } from "lang/ast/types.js";
+import { TerminalNode } from "antlr4ng";
+import { Node } from "lang/ast/ast.js";
+import { extract_doc_comment } from "../extract_doc_comment.js";
 
 export default class TopLevelCSTASTConverter extends DFOAVisitor<TopLevel> {
+    collect_doc_comment(ctx: { DOC_COMMENT: () => TerminalNode | null }, node: Node) {
+        if (ctx.DOC_COMMENT()) {
+            this.orch.file.docs.set(node.id, extract_doc_comment(ctx.DOC_COMMENT()!.getText()));
+        }
+    }
+
     visitTlStatement: (ctx: TlStatementContext) => TopLevel = ctx => {
         if (ctx.func()) {
             return this.visitFunc(ctx.func()!);
@@ -15,7 +24,9 @@ export default class TopLevelCSTASTConverter extends DFOAVisitor<TopLevel> {
         let ident = this.visit_ident(ctx.ident());
         let signature = this.visit_signature(ctx.signature());
         let body = this.visit_block(ctx.block());
-        return new Func(ident, signature, body, this.get_span(ctx));
+        let f = new Func(ident, signature, body, this.get_span(ctx));
+        this.collect_doc_comment(ctx, f);
+        return f;
     }
 
     visit_signature: (ctx: SignatureContext) => Signature = ctx => {

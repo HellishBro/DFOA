@@ -1,9 +1,10 @@
-import { CharStream, CommonTokenStream, Token } from "antlr4ng";
+import { CharStream, CommonTokenStream, TokenStream } from "antlr4ng";
 import { DFOALexer } from "./dfoa/DFOALexer.js";
 import { DFOAParser, StartContext } from "./dfoa/DFOAParser.js";
 
 export function gather_cst(code: string, pprint: boolean, tokens: boolean): {
     cst: StartContext,
+    token_stream: TokenStream,
     tokens?: string,
     pprint?: string
 } {
@@ -13,7 +14,8 @@ export function gather_cst(code: string, pprint: boolean, tokens: boolean): {
     let parser = new DFOAParser(token_stream);
     let tree = parser.start();
     let obj: ReturnType<typeof gather_cst> = {
-        cst: tree
+        cst: tree,
+        token_stream
     };
     if (pprint) {
         obj.pprint = tree.toStringTree(parser);

@@ -40,10 +40,10 @@ program.command("parse")
         exists: true
     }))
     .action((file: string) => {
-        let {cst, pprint, tokens} = gather_cst(fs.readFileSync(file).toString(), true, true);
+        let {cst, token_stream, pprint, tokens} = gather_cst(fs.readFileSync(file).toString(), true, true);
         console.log("Tokens:", tokens!);
         console.log("CST:", pprint!);
-        let converter = new CSTASTConverter(file)
+        let converter = new CSTASTConverter(file, token_stream)
         let ast = converter.start(cst);
         console.log("AST:", util.inspect(ast, false, null, true));
         console.log("File:", util.inspect(converter.file, false, null, true));

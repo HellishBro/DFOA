@@ -1,5 +1,5 @@
 lexer grammar DFOALexer;
-channels { Comment, DocComment }
+channels { Comment }
 
 FUNC: 'func';
 PRINT: 'print';
@@ -70,5 +70,5 @@ FLOAT: INT_PART '.' INT_PART?;
 
 WS: [ \t\r\n] -> skip; // i really can't care less about whitespace
 COMMENT: '//' ~[\r\n]* -> channel(Comment); // might be useful for linting
-DOC_COMMENT: '/**' (. | DOC_COMMENT)*? '*/' -> channel(DocComment); 
-MULT_LINE_COMMENT: '/*' (. | MULT_LINE_COMMENT)*? '*/' -> channel(Comment);
+DOC_COMMENT: '/**' (. | [\r\n] | DOC_COMMENT | MULT_LINE_COMMENT)*? '*/'; 
+MULT_LINE_COMMENT: '/*' (. | [\r\n] | DOC_COMMENT | MULT_LINE_COMMENT)*? '*/' -> channel(Comment);

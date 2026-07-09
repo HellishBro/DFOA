@@ -1,4 +1,4 @@
-import { ParseTree } from "antlr4ng";
+import { ParseTree, TokenStream } from "antlr4ng";
 import { DFOAVisitor as V } from "../dfoa/DFOAVisitor.js";
 import { Expression } from "lang/ast/expressions.js";
 import { Statement } from "lang/ast/statements.js";
@@ -24,10 +24,12 @@ export default interface Orchestrator {
 
 export class DFOAVisitor<T> extends V<T> {
     orch: Orchestrator;
+    token_stream: TokenStream;
 
-    constructor(orchestrator: Orchestrator) {
+    constructor(orchestrator: Orchestrator, token_stream: TokenStream) {
         super();
         this.orch = orchestrator;
+        this.token_stream = token_stream;
     }
 
     visit_expression(node: ExprContext): Expression {
@@ -64,8 +66,8 @@ export class DFOAVisitor<T> extends V<T> {
     get_span(node: ParseTree): Span {
         let interval = node.getSourceInterval();
         return {
-            start: interval.start,
-            end: interval.stop
+            start: this.token_stream.get(interval.start).start,
+            end: this.token_stream.get(interval.stop).stop
         }
     }
 

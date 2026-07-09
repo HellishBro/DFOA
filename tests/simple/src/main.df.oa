@@ -1,3 +1,24 @@
+/**
+    This code tests the parser's ability to do compile-time string literal concatenation.
+
+    Example of compile-time string literal concatenation:
+    ```
+    // This is buggy:
+        let x = 'compile-time' 'string' 'concatenation';
+        print x;
+    // prints out 'compile-timestringconcatenation'.
+
+    print 'compile-time' ' string' ' concatenation';
+    // this is what you want
+    ```
+
+    This features requires string literals. The following code will not work.
+    ```
+    for let x in range(5) {
+        print 'i = ' x; // syntax error!
+    }
+    ```
+*/
 func strings_test(): string {
     return '\N{SNAKE} \u2026 \x50 \n bwaa' ' lmfao';
 }
