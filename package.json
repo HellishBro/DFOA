@@ -18,11 +18,11 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.1.1",
     "antlr-ng": "^1.0.10",
     "eslint": "^10.6.0",
-    "tsx": "^4.22.5",
-    "typescript": "^6.0.3"
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "antlr4ng": "^3.0.16",
