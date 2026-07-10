@@ -1,7 +1,6 @@
-import { Assign, Break, Continue, ExpressionStatement, For, If, Let, NoOp, Print, Return, Statement, VarDecl, While } from "lang/ast/statements.js";
+import { Statement, Print, ExpressionStatement, If, For, While, Let, Assign, Return, Break, Continue, NoOp, VarDecl, Variable } from "lang/ast/ast.js";
 import { AssignContext, BreakContext, ContinueContext, ExprStmtContext, ForContext, IfContext, LetContext, PrintContext, ReturnContext, SemiContext, StatementContext, VarDeclContext, VarDeclListContext, WhileContext } from "../dfoa/DFOAParser.js";
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
-import { Variable } from "lang/ast/expressions.js";
 
 export default class StatementCSTASTConverter extends DFOAVisitor<Statement> {
     visitStatement: (ctx: StatementContext) => Statement = ctx => {

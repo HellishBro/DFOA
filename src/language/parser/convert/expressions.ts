@@ -1,10 +1,10 @@
-import { As, Attribute, BinaryOperators, BinOp, Expression, FunctionCall, List, LiteralBoolean, LiteralFloat, LiteralInteger, LiteralString, LiteralText, New, Operator, Subscript, Tuple, TupleSubscript, UnaryOperators, UnOp, Variable, VariableLifetime, VariableLifetimeEnum } from "lang/ast/expressions.js";
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
 import { AddSubContext, AddSubOpContext, AndContext, AtomContext, AtomTrailContext, AttributeContext, ComparisonContext, ExprContext, FuncCallTrailContext, ListContext, LiteralContext, MultDivContext, MultDivOpContext, NewExprContext, NotContext, OrContext, SubscriptContext, TrailContext, TupleAccessContext, TupleContext, TypeAliasContext, UnopContext, VariableContext } from "../dfoa/DFOAParser.js";
 import unescape from "lang/utils/unescape.js";
 import { ParseTree } from "antlr4ng";
 import { spanning } from "lang/utils/span.js";
 import { UncheckedType } from "lang/type/type.js";
+import { Expression, BinOp, Operator, BinaryOperators, UnOp, UnaryOperators, As, FunctionCall, Subscript, LiteralInteger, TupleSubscript, Attribute, LiteralString, LiteralText, LiteralFloat, LiteralBoolean, List, Tuple, New, Variable, VariableLifetime, VariableLifetimes } from "lang/ast/ast.js";
 
 export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
     visitExpr: (ctx: ExprContext) => Expression = ctx => {
@@ -183,7 +183,7 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
 
     visitTupleAccess: (ctx: TupleAccessContext) => Expression = ctx => {
         let left = this.visitTrail(ctx.trail());
-        let index = new LiteralInteger(parseInt(ctx.INTEGER().getText()), this.get_span(ctx.INTEGER()));
+        let index = new LiteralInteger(parseInt(ctx.INTEGER().getText()), UncheckedType, this.get_span(ctx.INTEGER()));
         return new TupleSubscript(left, index, UncheckedType, this.get_span(ctx));
     }
 
@@ -214,21 +214,23 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
         if (ctx.STRING()) {
             return new LiteralString(
                 ctx.STRING()!.map(s => unescape(s.getText())).reduce((a, l) => a + l, ""),
+                UncheckedType,
                 this.get_span(ctx)
             );
         } else if (ctx.TEXT()) {
             return new LiteralText(
                 ctx.TEXT()!.map(t => unescape(t.getText())).reduce((a, l) => a + l, ""),
+                UncheckedType,
                 this.get_span(ctx)
             );
         } else if (ctx.INTEGER()) {
-            return new LiteralInteger(parseInt(ctx.INTEGER()!.getText()), this.get_span(ctx));
+            return new LiteralInteger(parseInt(ctx.INTEGER()!.getText()), UncheckedType, this.get_span(ctx));
         } else if (ctx.FLOAT()) {
-            return new LiteralFloat(parseFloat(ctx.FLOAT()!.getText()), this.get_span(ctx));
+            return new LiteralFloat(parseFloat(ctx.FLOAT()!.getText()), UncheckedType, this.get_span(ctx));
         } else if (ctx.TRUE()) {
-            return new LiteralBoolean(true, this.get_span(ctx));
+            return new LiteralBoolean(true, UncheckedType, this.get_span(ctx));
         } else if (ctx.FALSE()) {
-            return new LiteralBoolean(false, this.get_span(ctx));
+            return new LiteralBoolean(false, UncheckedType, this.get_span(ctx));
         }
         unreachable();
     }
@@ -255,10 +257,10 @@ export default class ExpressionCSTASTConverter extends DFOAVisitor<Expression> {
         return new Variable(
             this.visit_ident(ctx.ident()),
             ctx.lifetime() == null ? null : new VariableLifetime(
-                ctx.lifetime()!.GLOBAL() ? VariableLifetimeEnum.GLOBAL :
-                ctx.lifetime()!.PERSISTENT() ? VariableLifetimeEnum.PERSISTENT :
-                ctx.lifetime()!.LOCAL() ? VariableLifetimeEnum.LOCAL :
-                ctx.lifetime()!.LINE() ? VariableLifetimeEnum.LINE : unreachable(),
+                ctx.lifetime()!.GLOBAL() ? VariableLifetimes.GLOBAL :
+                ctx.lifetime()!.PERSISTENT() ? VariableLifetimes.PERSISTENT :
+                ctx.lifetime()!.LOCAL() ? VariableLifetimes.LOCAL :
+                ctx.lifetime()!.LINE() ? VariableLifetimes.LINE : unreachable(),
                 this.get_span(ctx.lifetime()!)
             ),
             UncheckedType,

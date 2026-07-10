@@ -1,17 +1,11 @@
 import { BasicType, Type } from "./base.js";
 
 
-export class ErrorType extends Type {
-    message: string | undefined;
-    constructor(message: string | undefined, guards: Type[]) {
+export const ErrorType = new class ErrorType extends Type {
+    constructor() {
         super(BasicType.Error);
-        if (guards.some(g => g.type == BasicType.Error)) {
-            this.message = undefined;
-        } else {
-            this.message = message;
-        }
     }
-    describe(): string | undefined { return undefined; };
+    describe(): undefined { return undefined; };
     subtypes(other: Type): boolean {
         return false;
     }
@@ -35,6 +29,9 @@ export const AnyType = new class AnyType extends Type {
         super(BasicType.Any);
     }
     describe(): string { return "any"; }
+    subtypes(other: Type): boolean {
+        return false;
+    }
 };
 
 export const UncheckedType = new class UncheckedType extends Type {

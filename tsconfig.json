@@ -42,7 +42,8 @@
     "paths": {
       "lang/*": ["./src/language/*"],
       "struct/*": ["./src/struct/*"],
-      "data/*": ["./src/data/*"]
+      "data/*": ["./src/data/*"],
+      "utils/*": ["./src/utils/*"]
     }
   },
   "include": [

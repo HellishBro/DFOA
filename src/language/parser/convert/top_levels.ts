@@ -1,9 +1,7 @@
-import { Func, Parameter, Signature, TopLevel, TypeVar } from "lang/ast/top_levels.js";
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
 import { FuncContext, GenericDefContext, ParamContext, ParamslistContext, ReturnSigContext, SignatureContext, TlStatementContext, TypeParamContext } from "../dfoa/DFOAParser.js";
-import { TypeNode } from "lang/ast/types.js";
 import { TerminalNode } from "antlr4ng";
-import { Node } from "lang/ast/ast.js";
+import { Func, Node, Parameter, Signature, TopLevel, TypeNode, TypeVar } from "lang/ast/ast.js";
 import { extract_doc_comment } from "../extract_doc_comment.js";
 
 export default class TopLevelCSTASTConverter extends DFOAVisitor<TopLevel> {

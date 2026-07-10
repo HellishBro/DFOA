@@ -1,11 +1,7 @@
-import { Attribute, BinaryOperators, BinOp, Expression, FunctionCall, List, LiteralFloat, LiteralInteger, LiteralString, LiteralText, Operator, Subscript, Tuple, TupleSubscript, UnaryOperators, UnOp } from "lang/ast/expressions.js";
+import { TypeNode, TupleType, BasicType } from "lang/ast/ast.js";
+import { TypeContext, TupleTypeContext, GroupingTypeContext, BasicTypeContext, GenericsContext } from "../dfoa/DFOAParser.js";
 import { DFOAVisitor, unreachable } from "./orchestrator.js";
-import { AddSubContext, AddSubOpContext, AndContext, AtomContext, AtomTrailContext, AttributeContext, BasicTypeContext, ComparisonContext, CompOpContext, ExprContext, FuncCallTrailContext, FuncInvokeContext, GenericsContext, GroupingTypeContext, ListContext, LiteralContext, MultDivContext, MultDivOpContext, NotContext, OrContext, SubscriptContext, TrailContext, TupleAccessContext, TupleContext, TupleTypeContext, TypeAliasContext, TypeContext, UnopContext } from "../dfoa/DFOAParser.js";
-import unescape from "lang/utils/unescape.js";
-import { ParseTree } from "antlr4ng";
-import { spanning } from "lang/utils/span.js";
 import { UncheckedType } from "lang/type/type.js";
-import { BasicType, TupleType, TypeNode } from "lang/ast/types.js";
 
 export default class TypeCSTASTConverter extends DFOAVisitor<TypeNode> {
     visitType: (ctx: TypeContext) => TypeNode = ctx => {

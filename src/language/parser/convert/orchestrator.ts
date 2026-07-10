@@ -1,13 +1,9 @@
 import { ParseTree, TokenStream } from "antlr4ng";
 import { DFOAVisitor as V } from "../dfoa/DFOAVisitor.js";
-import { Expression } from "lang/ast/expressions.js";
-import { Statement } from "lang/ast/statements.js";
-import { TopLevel } from "lang/ast/top_levels.js";
 import { Span } from "lang/utils/span.js";
 import { BlockContext, ExprContext, IdentContext, StatementContext, TlStatementContext, TypeContext } from "../dfoa/DFOAParser.js";
-import { Body, Identifier, Node } from "lang/ast/ast.js";
+import { Body, Expression, Identifier, Node, Statement, TopLevel, TypeNode } from "lang/ast/ast.js";
 import unescape from "lang/utils/unescape.js";
-import { TypeNode } from "lang/ast/types.js";
 import TypeCSTASTConverter from "./type.js";
 import TopLevelCSTASTConverter from "./top_levels.js";
 import StatementCSTASTConverter from "./statements.js";

@@ -1,4 +1,3 @@
-import { Module } from "lang/ast/top_levels.js";
 import { StartContext } from "../dfoa/DFOAParser.js";
 import ExpressionCSTASTConverter from "./expressions.js";
 import Orchestrator from "./orchestrator.js";
@@ -9,6 +8,7 @@ import { File } from "lang/table/table.js";
 import { switch_context } from "lang/ast/ast_file_context.js";
 import { ParseTree, TokenStream } from "antlr4ng";
 import { Span } from "lang/utils/span.js";
+import { Module } from "lang/ast/ast.js";
 
 export default class CSTASTConverter {
     orchestrator: Orchestrator;

@@ -6,7 +6,8 @@
     "dfoa": "tsx src/cli/index.ts",
     "build": "pnpm gen-grammar && pnpm gen-unicode && tsc",
     "gen-grammar": "antlr-ng -o src/language/parser/dfoa -Dlanguage=TypeScript grammar/DFOALexer.g4 && antlr-ng -o src/language/parser/dfoa --lib src/language/parser/dfoa -l -v -Dlanguage=TypeScript grammar/DFOA.g4",
-    "gen-unicode": "tsx src/cli/tools/generate_unicode_data.ts"
+    "gen-unicode": "tsx src/meta/generate_unicode_data.ts",
+    "gen-ast": "tsx src/meta/definitions.ts"
   },
   "license": "MIT",
   "devEngines": {
@@ -21,8 +22,9 @@
     "@types/node": "^26.1.1",
     "antlr-ng": "^1.0.10",
     "eslint": "^10.6.0",
+    "prettier": "^3.9.4",
     "tsx": "^4.23.0",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "antlr4ng": "^3.0.16",
