@@ -1,9 +1,11 @@
 import { Span } from "lang/utils/span.js";
-import { Type } from "lang/type/base.js";
+import { TypeID } from "lang/type/type.js";
 import { NodeID } from "lang/table/table.js";
 import { current_file_context } from "./ast_file_context.js";
 import { Visitor } from "./visitor.js";
 import { Listener } from "./listener.js";
+
+type Type = TypeID | undefined;
 
 export enum BinaryOperators {
     ADD = "+",
@@ -42,6 +44,7 @@ export abstract class Node {
     abstract accept<T>(visitor: Visitor<T>): T;
     abstract enter(listener: Listener): void;
     abstract exit(listener: Listener): void;
+    abstract toString(): string;
 }
 
 export class Identifier extends Node {
@@ -50,6 +53,10 @@ export class Identifier extends Node {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Identifier(name=${this.name})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -72,6 +79,10 @@ export abstract class TypeNode extends Node {
     ) {
         super(span);
     }
+
+    toString(): string {
+        return `TypeNode(type=${this.type})`;
+    }
 }
 
 export class BasicType extends TypeNode {
@@ -82,6 +93,10 @@ export class BasicType extends TypeNode {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `BasicType(name=${this.name}, args=${this.args}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -116,6 +131,10 @@ export class TupleType extends TypeNode {
         super(type, span);
     }
 
+    toString(): string {
+        return `TupleType(items=${this.items}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_tuple_type!(this);
     }
@@ -144,6 +163,10 @@ export abstract class Expression extends Node {
     ) {
         super(span);
     }
+
+    toString(): string {
+        return `Expression(type=${this.type})`;
+    }
 }
 
 export class LiteralString extends Expression {
@@ -153,6 +176,10 @@ export class LiteralString extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `LiteralString(value=${this.value}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -177,6 +204,10 @@ export class LiteralText extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `LiteralText(value=${this.value}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_literal_text!(this);
     }
@@ -197,6 +228,10 @@ export class LiteralInteger extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `LiteralInteger(value=${this.value}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -221,6 +256,10 @@ export class LiteralFloat extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `LiteralFloat(value=${this.value}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_literal_float!(this);
     }
@@ -241,6 +280,10 @@ export class LiteralBoolean extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `LiteralBoolean(value=${this.value}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -265,6 +308,10 @@ export class BinOp extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `BinOp(left=${this.left}, operator=${this.operator}, right=${this.right}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -296,6 +343,10 @@ export class UnOp extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `UnOp(operator=${this.operator}, operand=${this.operand}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_un_op!(this);
     }
@@ -321,6 +372,10 @@ export class Subscript extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `Subscript(value=${this.value}, subscription=${this.subscription}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -352,6 +407,10 @@ export class TupleSubscript extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `TupleSubscript(value=${this.value}, index=${this.index}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_tuple_subscript!(this);
     }
@@ -379,6 +438,10 @@ export class Attribute extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `Attribute(value=${this.value}, attribute=${this.attribute}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -409,6 +472,10 @@ export class FunctionCall extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `FunctionCall(value=${this.value}, args=${this.args}, generics=${this.generics}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -450,6 +517,10 @@ export class As extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `As(value=${this.value}, alias=${this.alias}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_as!(this);
     }
@@ -478,6 +549,10 @@ export class New extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `New(value=${this.value}, args=${this.args}, generics=${this.generics}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -518,6 +593,10 @@ export class List extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `List(items=${this.items}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_list!(this);
     }
@@ -546,6 +625,10 @@ export class Tuple extends Expression {
         span: Span
     ) {
         super(type, span);
+    }
+
+    toString(): string {
+        return `Tuple(items=${this.items}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -579,6 +662,10 @@ export class Variable extends Expression {
         super(type, span);
     }
 
+    toString(): string {
+        return `Variable(name=${this.name}, lifetime=${this.lifetime}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_variable!(this);
     }
@@ -610,6 +697,10 @@ export class Operator<Ops> extends Node {
         super(span);
     }
 
+    toString(): string {
+        return `Operator<Ops>(op=${this.op})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         throw new Error("please do not see me -Operator<Ops>");
     }
@@ -631,6 +722,10 @@ export class VariableLifetime extends Node {
         super(span);
     }
 
+    toString(): string {
+        return `VariableLifetime(lifetime=${this.lifetime})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         throw new Error("please do not see me -VariableLifetime");
     }
@@ -648,6 +743,10 @@ export abstract class Statement extends Node {
     constructor(span: Span) {
         super(span);
     }
+
+    toString(): string {
+        return `Statement()`;
+    }
 }
 
 export class Print extends Statement {
@@ -656,6 +755,10 @@ export class Print extends Statement {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Print(expression=${this.expression})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -683,6 +786,10 @@ export class ExpressionStatement extends Statement {
         super(span);
     }
 
+    toString(): string {
+        return `ExpressionStatement(expression=${this.expression})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_expression_statement!(this);
     }
@@ -708,6 +815,10 @@ export class If extends Statement {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `If(expression=${this.expression}, if_true=${this.if_true}, if_false=${this.if_false})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -745,6 +856,10 @@ export class For extends Statement {
         super(span);
     }
 
+    toString(): string {
+        return `For(variables=${this.variables}, expression=${this.expression}, body=${this.body})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_for!(this);
     }
@@ -779,6 +894,10 @@ export class While extends Statement {
         super(span);
     }
 
+    toString(): string {
+        return `While(expression=${this.expression}, body=${this.body})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_while!(this);
     }
@@ -803,6 +922,10 @@ export class Break extends Statement {
         super(span);
     }
 
+    toString(): string {
+        return `Break()`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_break!(this);
     }
@@ -821,6 +944,10 @@ export class Continue extends Statement {
         super(span);
     }
 
+    toString(): string {
+        return `Continue()`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_continue!(this);
     }
@@ -837,6 +964,10 @@ export class Continue extends Statement {
 export class NoOp extends Statement {
     constructor(span: Span) {
         super(span);
+    }
+
+    toString(): string {
+        return `NoOp()`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -859,6 +990,10 @@ export class Let extends Statement {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Let(lhs=${this.lhs}, rhs=${this.rhs})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -897,6 +1032,10 @@ export class Assign extends Statement {
         super(span);
     }
 
+    toString(): string {
+        return `Assign(lhs=${this.lhs}, rhs=${this.rhs})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_assign!(this);
     }
@@ -922,6 +1061,10 @@ export class Return extends Statement {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Return(expression=${this.expression})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -951,6 +1094,10 @@ export class Body extends Node {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Body(statements=${this.statements})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -983,6 +1130,10 @@ export class VarDecl extends Node {
         super(span);
     }
 
+    toString(): string {
+        return `VarDecl(variable=${this.variable}, type=${this.type})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_var_decl!(this);
     }
@@ -1010,6 +1161,10 @@ export abstract class TopLevel extends Node {
     constructor(span: Span) {
         super(span);
     }
+
+    toString(): string {
+        return `TopLevel()`;
+    }
 }
 
 export class Func extends TopLevel {
@@ -1020,6 +1175,10 @@ export class Func extends TopLevel {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Func(name=${this.name}, signature=${this.signature}, body=${this.body})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -1051,6 +1210,10 @@ export class TypeVar extends Node {
         super(span);
     }
 
+    toString(): string {
+        return `TypeVar(name=${this.name})`;
+    }
+
     accept<T>(visitor: Visitor<T>): T {
         return visitor.visit_type_var!(this);
     }
@@ -1075,6 +1238,10 @@ export class Parameter extends Node {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Parameter(name=${this.name}, type=${this.type})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -1108,6 +1275,10 @@ export class Signature extends Node {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Signature(type_vars=${this.type_vars}, parameters=${this.parameters}, returns=${this.returns})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {
@@ -1150,6 +1321,10 @@ export class Module extends Node {
         span: Span
     ) {
         super(span);
+    }
+
+    toString(): string {
+        return `Module(filename=${this.filename}, items=${this.items})`;
     }
 
     accept<T>(visitor: Visitor<T>): T {

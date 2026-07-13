@@ -18,7 +18,7 @@ export default class TypeCSTASTConverter extends DFOAVisitor<TypeNode> {
     visitTupleType: (ctx: TupleTypeContext) => TypeNode = ctx => {
         return new TupleType(
             ctx.type_().map(t => this.visitType(t)),
-            UncheckedType,
+            undefined,
             this.get_span(ctx)
         )
     }
@@ -31,7 +31,7 @@ export default class TypeCSTASTConverter extends DFOAVisitor<TypeNode> {
         return new BasicType(
             this.visit_ident(ctx.ident()),
             this.visit_generics(ctx.generics()),
-            UncheckedType,
+            undefined,
             this.get_span(ctx)
         )
     }

@@ -233,6 +233,14 @@ class Node {
                 }) {
                     super(${parent_fields.map(f => f.name).join(", ")});
                 }
+
+                toString(): string {
+                    return \`${this.name}(${
+                        [...this.fields, ...parent_fields].filter(f => f.name != "span").map(f => 
+                            `${f.name}=\$\{this.${f.name}\}`
+                        ).join(", ")
+                    })\`;
+                }
             
                 ${this.children.length == 0 ?
                     `
@@ -316,6 +324,7 @@ export const BaseNode = new class extends Node {
                     abstract accept<T>(visitor: Visitor<T>): T;
                     abstract enter(listener: Listener): void;
                     abstract exit(listener: Listener): void;
+                    abstract toString(): string;
                 }
             `
         );
@@ -342,11 +351,13 @@ export const Type = {
 
 const preamble = `
 import { Span } from "lang/utils/span.js";
-import { Type } from "lang/type/base.js";
+import { TypeID } from "lang/type/type.js";
 import { NodeID } from "lang/table/table.js";
 import { current_file_context } from "./ast_file_context.js";
 import { Visitor } from "./visitor.js";
 import { Listener } from "./listener.js";
+
+type Type = TypeID | undefined;
 
 export enum BinaryOperators {
     ADD = "+",

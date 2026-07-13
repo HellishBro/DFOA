@@ -1,43 +1,86 @@
-import { Type, BasicType } from "./base.js";
+import { FunctionType } from "./misc_builtins.js";
+import { TypeData, TypeID, TypeKind } from "./type.js"
+import { TypeTable } from "./type_table.js"
 
-export class ListType extends Type {
-    constructor(public value: Type) {
-        super(BasicType.List);
+export class ListType extends TypeData {
+    index_type?: TypeID;
+
+    constructor(public item: TypeID) {
+        super(TypeKind.List)
     }
-    describe(): string { return `list<${this.value.describe()}>`; }
-    subtypes(other: Type): boolean {
-        if (other.type == BasicType.List) {
-            return this.value.subtypes((other as ListType).value);
+
+    post_init(table: TypeTable): void {
+        this.index_type = table.append(
+            new FunctionType([table.Int], this.item)
+        );
+    }
+
+    repr(table: TypeTable): string {
+        return `list<${table.get(this.item)!.repr(table)}>`
+    }
+    valid(table: TypeTable): boolean {
+        return table.valid(this.item)
+    }
+
+    attribute(attr: string, table: TypeTable): TypeID | undefined {
+        if (attr == "$index") {
+            return this.index_type;
         }
-        return super.subtypes(other);
+        if (attr == "length") {
+            return table.Int;
+        }
     }
 }
 
-export class DictionaryType extends Type {
-    constructor(public value: Type) {
-        super(BasicType.Dictionary);
+export class DictionaryType extends TypeData {
+    index_type?: TypeID;
+
+    constructor(public item: TypeID) {
+        super(TypeKind.Dictionary)
     }
-    describe(): string { return `dict<${this.value.describe()}>`; }
-    subtypes(other: Type): boolean {
-        if (other.type == BasicType.Dictionary) {
-            return this.value.subtypes((other as DictionaryType).value);
+
+    post_init(table: TypeTable): void {
+        this.index_type = table.append(
+            new FunctionType([table.String], this.item)
+        );
+    }
+
+    repr(table: TypeTable): string {
+        return `dict<${table.get(this.item)!.repr(table)}>`
+    }
+    valid(table: TypeTable): boolean {
+        return table.valid(this.item)
+    }
+
+    attribute(attr: string, table: TypeTable): TypeID | undefined {
+        if (attr == "$index") {
+            return this.index_type;
         }
-        return super.subtypes(other);
+        if (attr == "length") {
+            return table.Int;
+        }
     }
 }
 
-export class TupleType extends Type {
-    constructor(public values: Type[]) {
-        super(BasicType.Tuple);
+export class TupleType extends TypeData {
+    constructor(public items: TypeID[]) {
+        super(TypeKind.Tuple)
     }
-    describe(): string { return `(${this.values.map(v => v.describe()).join(", ")})`; }
-    subtypes(other: Type): boolean {
-        if (other.type == BasicType.Tuple && (other as TupleType).values.length == this.values.length) {
-            return this.values.every((v, i) => v.subtypes((other as TupleType).values[i]!));
+
+    repr(table: TypeTable): string {
+        return `(${this.items.map(id => table.get(id)!.repr(table)).join(", ")})`
+    }
+    valid(table: TypeTable): boolean {
+        return this.items.every(id => table.valid(id))
+    }
+
+    get length(): number {
+        return this.items.length
+    }
+
+    attribute(attr: string, table: TypeTable): TypeID | undefined {
+        if (attr == "length") {
+            return table.Int;
         }
-        if (other.type == BasicType.List && this.values.every(v => v.subtypes((other as ListType).value))) {
-            return true;
-        }
-        return super.subtypes(other);
     }
 }
